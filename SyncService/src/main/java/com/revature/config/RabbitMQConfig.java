@@ -11,35 +11,65 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+/**
+ * @author Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
+ *
+ */
 @Configuration
 public class RabbitMQConfig {
-
+	
+	/** * */
 	@Value("FormResponse-Queue")
 	public String queueName;
-
+	
+	/** * */
 	@Value("FormResponse-Queue-Key")
 	public String routingKey;
-
+	
+	//TODO: This value should be changed - perhaps to "FormResponse-Exchange"
+	/** * */
+	@Value("WeisDirect")
+	public String exchange;
+	
+	/**
+	 * @return
+	 */
 	@Bean
 	public Queue queue() {
 		return new Queue(queueName, false);
 	}
-
+	
+	/**
+	 * @return
+	 */
 	@Bean
 	public DirectExchange exchange() {
-		return new DirectExchange("WeisDirect");
+		return new DirectExchange(exchange);
 	}
 
+	/**
+	 * @param queue
+	 * @param exchange
+	 * @return
+	 */
 	@Bean
 	public Binding binding(Queue queue, DirectExchange exchange) {
 		return BindingBuilder.bind(queue).to(exchange).with(routingKey);
 	}
 
+	/**
+	 * @return
+	 */
 	@Bean
 	public MessageConverter jsonMessageConverter() {
 		return new Jackson2JsonMessageConverter();
 	}
 
+	/**
+	 * @param rabbitTemplate
+	 * @param messageConverter
+	 * @return
+	 */
 	public RabbitTemplate rabbitTemplate(RabbitTemplate rabbitTemplate, MessageConverter messageConverter) {
 		rabbitTemplate.setMessageConverter(messageConverter);
 		return rabbitTemplate;

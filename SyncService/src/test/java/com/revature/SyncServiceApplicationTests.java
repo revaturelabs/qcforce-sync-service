@@ -14,21 +14,34 @@ import com.revature.models.FormResponse;
 import com.revature.service.GoogleSheets;
 
 
+/**
+ * @author Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
+ *
+ */
 @SpringBootTest
 class SyncServiceApplicationTests {
-
+	//TODO: Determine if we should leave these @AutoWired fields the way we see them.
+	
+	/** * */
 	@Autowired
 	GoogleSheets gSheet;
 	
+	/** * */
 	@Autowired
 	RabbitTemplate rabbit;
 	
+	/** * */
 	@Autowired
 	MessageConverter mc;
 	
+	/** * */
 	@Value("FormResponse-Queue-Key")
 	String routingKey;
 
+	
+	/**
+	 * 
+	 */
 	@Test
 	public void testConnectToSpreadSheet() {
 		rabbit.setMessageConverter(mc);
@@ -39,6 +52,9 @@ class SyncServiceApplicationTests {
 		}
 	}
 	
+	/**
+	 * @param values
+	 */
 	public void testMono(List<List<Object>> values) {
 		
 	}
