@@ -12,12 +12,13 @@ import org.springframework.stereotype.Service;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.ValueRange;
 import com.revature.config.SheetsServiceConfig;
+import com.revature.models.FormResponse;
 
 @Service
 public class GoogleSheets {
 
 	private Sheets sheetsService;
-
+	
 	@Autowired
 	private void setSheetsService(Sheets sheetsService) {
 		this.sheetsService = sheetsService;
@@ -25,6 +26,25 @@ public class GoogleSheets {
 
 	public List<List<String>> getFilteredSheetData() {
 		return filterDup(convertRawToStringList(retrieveRawSheetData()));
+	}
+	
+	public List<FormResponse> getFormResponses() {
+		List<FormResponse>forms=new ArrayList<FormResponse>();
+		List<List<String>> filteredData = getFilteredSheetData();
+		List<String>questions=filteredData.get(0);
+		questions.remove(0);
+		for(int i=1;i< filteredData.size();i++)
+		{
+			FormResponse temp =new FormResponse();
+			temp.setTimestamp(filteredData.get(i).get(0));
+			List<String>answers=filteredData.get(i);
+			answers.remove(0);
+			temp.setQuestions(questions);
+			temp.setAnswers(answers);
+			temp.setFormId(i);
+			forms.add(temp);
+		}
+		return forms;
 	}
 
 	public List<List<Object>> retrieveRawSheetData() {
@@ -59,9 +79,9 @@ public class GoogleSheets {
 
 	public List<List<String>> filterDup(List<List<String>> data) {
 		// size test
-		for (List row : data) {
-			System.out.println("SIZE: " + row.size());
-		}
+//		for (List row : data) {
+//			System.out.println("SIZE: " + row.size());
+//		}
 
 		List<String> questions = data.get(0);
 		List<Integer> itemsToRemove = new ArrayList<Integer>();

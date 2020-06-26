@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import com.revature.models.FormResponse;
 import com.revature.service.GoogleSheets;
 
 @SpringBootTest
@@ -16,9 +17,9 @@ class SyncServiceApplicationTests {
 
 	@Test
 	public void testConnectToSpreadSheet() {
-		List<List<String>> data = gSheet.getFilteredSheetData();
-
-		for (List row : data) {
+		List<FormResponse> data = gSheet.getFormResponses();
+		
+		for (FormResponse row : data) {
 			System.out.println(row.toString());
 		}
 	}

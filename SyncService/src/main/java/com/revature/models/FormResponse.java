@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FormReponse implements Serializable {
+public class FormResponse implements Serializable {
 
 	private static final long serialVersionUID = 9136762341724971453L;
 
@@ -44,4 +44,12 @@ public class FormReponse implements Serializable {
 	public void setAnswers(List<String> answers) {
 		this.answers = answers;
 	}
+
+	@Override
+	public String toString() {
+		return "FormResponse [formId=" + formId + ", timestamp=" + timestamp + ", questions=" + questions + ", answers="
+				+ answers + "]";
+	}
+	
+	
 }
