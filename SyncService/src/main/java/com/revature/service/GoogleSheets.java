@@ -6,12 +6,16 @@ import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
 
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.ValueRange;
+import com.revature.config.RabbitMQConfig;
 import com.revature.config.SheetsServiceConfig;
+import com.revature.domain.Form;
 import com.revature.models.FormResponse;
 
 /**
@@ -24,8 +28,13 @@ public class GoogleSheets {
 	/** * */
 	private Sheets sheetsService;
 	
+	
 	/** * */
-	private int formIdCount = 0;
+	private FormService formService;
+	
+	private RabbitTemplate rabbitTemplate;
+	
+	private MessageConverter messageConverter;
 	
 	/**
 	 * @param sheetsService
@@ -34,17 +43,44 @@ public class GoogleSheets {
 	private void setSheetsService(Sheets sheetsService) {
 		this.sheetsService = sheetsService;
 	}
-	// TODO: This should not necessarily be @Autowired given that it's field injection and we shouldn't break encapsulation.
-	// However, let's just have it here for now because we might have to store this count in the database. 
-	// This would be an easy fix later.
+	
 	/**
-	 * @param formIdCount
+	 * @param rabbitTemplate
 	 */
 	@Autowired
-	private void setFormIdCount(int formIdCount) {
-		this.formIdCount = formIdCount;
+	private void setRabbitTemplate(RabbitTemplate rabbitTemplate) {
+		this.rabbitTemplate = rabbitTemplate;
+	}
+	
+	/**
+	 * @param messageConverter
+	 */
+	@Autowired
+	private void setMessageConverter(MessageConverter messageConverter) {
+		this.messageConverter = messageConverter;
+	}
+	
+	/**
+	 * @param formService
+	 */
+	@Autowired
+	private void setFormService(FormService formService) {
+		this.formService = formService;
 	}
 
+	
+	public boolean sendData()
+	{
+		rabbitTemplate.setMessageConverter(messageConverter);
+		List<FormResponse> data = this.getFormResponses();
+		for (FormResponse row : data) {
+			System.out.println(row.toString());
+			rabbitTemplate.convertAndSend(RabbitMQConfig.exchange,RabbitMQConfig.routingKey,row);
+		}
+		return true;
+	}
+	
+	
 	/**
 	 * @return
 	 */
@@ -56,6 +92,7 @@ public class GoogleSheets {
 	 * @return
 	 */
 	public List<FormResponse> getFormResponses() {
+		int formIdCount = formService.getFormById(1).getFormId();
 		// TODO: Comment
 		List<FormResponse>forms=new ArrayList<FormResponse>();
 		// TODO: Comment
@@ -65,27 +102,24 @@ public class GoogleSheets {
 		// TODO: Comment
 		questions.remove(0);
 		
-		// TODO: Comment
+		//Cycle through filtered data and create a new form response and add it to the returned array
 		for(int i=1;i< filteredData.size();i++)
-		{	// TODO: Comment
+		{
 			FormResponse temp =new FormResponse();
-			// TODO: Comment
 			temp.setTimestamp(filteredData.get(i).get(0));
-			// TODO: Comment
 			List<String>answers=filteredData.get(i);
-			// TODO: Comment
 			answers.remove(0);
-			// TODO: Comment
 			temp.setQuestions(questions);
-			// TODO: Comment
 			temp.setAnswers(answers);
-			// TODO: Comment
 			temp.setFormId(i + formIdCount);
-			// TODO: Comment
 			forms.add(temp);
 		}
 		// TODO: Comment
 		formIdCount += filteredData.size() - 1;
+		Form lastForm=new Form();
+		lastForm.setId(1);
+		lastForm.setFormId(formIdCount);
+		formService.updateForm(lastForm);
 		// TODO: Comment
 		return forms;
 	}
@@ -127,6 +161,7 @@ public class GoogleSheets {
 	 * @param data
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public List<List<String>> convertRawToStringList(List<List<Object>> data) {
 		//TODO: Comment
 		List<List<String>> listOfLists = new ArrayList<List<String>>();
@@ -134,7 +169,7 @@ public class GoogleSheets {
 		/* 
 		 * TODO: Comment
 		 */
-		for (List row : data) {
+		for (@SuppressWarnings("rawtypes") List row : data) {
 			listOfLists.add(row);
 		}
 		return listOfLists;
@@ -144,6 +179,7 @@ public class GoogleSheets {
 	 * @param data
 	 * @return
 	 */
+	@SuppressWarnings("unchecked")
 	public List<List<String>> filterDup(List<List<String>> data) {
 		// size test
 //		for (List row : data) {
@@ -204,7 +240,7 @@ public class GoogleSheets {
 		//TODO: Comment
 		int maxColumn = data.get(0).size();
 		//TODO: Comment
-		for (List row : data) {
+		for (@SuppressWarnings("rawtypes") List row : data) {
 			//TODO: Comment
 			while (row.size() < maxColumn) {
 				//TODO: Comment

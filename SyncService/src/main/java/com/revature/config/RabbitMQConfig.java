@@ -24,12 +24,12 @@ public class RabbitMQConfig {
 	
 	/** * */
 	@Value("FormResponse-Queue-Key")
-	public String routingKey;
+	public static String routingKey;
 	
 	//TODO: This value should be changed - perhaps to "FormResponse-Exchange"
 	/** * */
-	@Value("WeisDirect")
-	public String exchange;
+	@Value("FormResponse-Exchange")
+	public static String exchange;
 	
 	/**
 	 * @return
@@ -74,5 +74,24 @@ public class RabbitMQConfig {
 		rabbitTemplate.setMessageConverter(messageConverter);
 		return rabbitTemplate;
 	}
+
+	public String getQueueName() {
+		return queueName;
+	}
+
+	public void setQueueName(String queueName) {
+		this.queueName = queueName;
+	}
+
+	public String getRoutingKey() {
+		return routingKey;
+	}
+
+	public String getExchange() {
+		return exchange;
+	}
+
+	
+	
 
 }
