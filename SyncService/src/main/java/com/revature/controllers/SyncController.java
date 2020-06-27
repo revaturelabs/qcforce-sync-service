@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.revature.domain.Batch;
 import com.revature.models.FormResponse;
-import com.revature.service.GoogleSheets;
+import com.revature.service.GoogleRetrievalService;
+import com.revature.service.MessageService;
 
 /**
  * @author Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
@@ -17,30 +19,20 @@ import com.revature.service.GoogleSheets;
 @RestController
 public class SyncController {
 
-	/**
-	 * @return
-	 */
-	GoogleSheets googleSheets;
-	
-	
-	
+	private MessageService messageService;
+		
 	@Autowired
-	public void setGoogleSheets(GoogleSheets googleSheets)
+	public void setMessageService(MessageService messageService)
 	{
-		this.googleSheets = googleSheets;
+		this.messageService= messageService;
 	}
 	
 	@PostMapping("/sync")
-	public boolean triggerSyncService()
+	public void triggerSyncService()
 	{
-		return googleSheets.sendData();
+		messageService.sendData();
 	}
 	
-	@GetMapping("/sync")
-	public List<FormResponse> displayCurrentCount()
-	{
-		return googleSheets.getFormResponses();
-	}
 	
 //	@GetMapping("/sync")
 //	public List<List<String>> displayCurrentCount()

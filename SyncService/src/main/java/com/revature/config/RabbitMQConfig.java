@@ -28,7 +28,7 @@ public class RabbitMQConfig {
 	
 	//TODO: This value should be changed - perhaps to "FormResponse-Exchange"
 	/** * */
-	@Value("FormResponse-Exchange")
+	@Value("WeisDirect")
 	public static String exchange;
 	
 	/**
@@ -63,16 +63,6 @@ public class RabbitMQConfig {
 	@Bean
 	public MessageConverter jsonMessageConverter() {
 		return new Jackson2JsonMessageConverter();
-	}
-
-	/**
-	 * @param rabbitTemplate
-	 * @param messageConverter
-	 * @return
-	 */
-	public RabbitTemplate rabbitTemplate(RabbitTemplate rabbitTemplate, MessageConverter messageConverter) {
-		rabbitTemplate.setMessageConverter(messageConverter);
-		return rabbitTemplate;
 	}
 
 	public String getQueueName() {
