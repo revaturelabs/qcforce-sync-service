@@ -60,12 +60,8 @@ public class GoogleRetrievalService implements DataRetrievalService{
 		
 		currentRow = formService.getFormById(1).getFormId();
 		
-		if (currentRow<=0)
-		{
-			currentRow=1;
-		}
-		
-		String range = "A"+(currentRow+1)+":ZZZ";
+		currentRow+=1;
+		String range = "A"+(currentRow)+":ZZZ";
 		// TODO: Comment
 		ValueRange response,questions;
 		
@@ -73,7 +69,6 @@ public class GoogleRetrievalService implements DataRetrievalService{
 		try {
 			questions = sheetsService.spreadsheets().values().get(spreadsheetId, "A1:1").execute();
 			response = sheetsService.spreadsheets().values().get(spreadsheetId, range).execute();
-			
 			if(formService.getFormById(1).getFormId()+1!=currentRow)
 			{
 				return new ArrayList<List<Object>>();

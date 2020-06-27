@@ -61,20 +61,20 @@ public class RabbitMQService implements MessageService{
 		rabbitTemplate.setMessageConverter(messageConverter);
 		List<FormResponse> data = dataFilterService.mapFormResponses();
 		System.out.println("Data:\n"+data);
-			
-		
 		for (FormResponse row : data) {
-			if(formService.getFormById(1).getFormId()+1==GoogleRetrievalService.currentRow)
+			System.out.println("Current Row:"+GoogleRetrievalService.currentRow);
+			System.out.println("Database Row:"+(formService.getFormById(1).getFormId()+1));
+			if((formService.getFormById(1).getFormId()+1)==GoogleRetrievalService.currentRow)
 			{
 				try
 				{
 				rabbitTemplate.convertAndSend(RabbitMQConfig.exchange,RabbitMQConfig.routingKey,row);
 				//Updates 
-				GoogleRetrievalService.currentRow+=1;
 				Form f =new Form();
 				f.setId(1);
 				f.setFormId(GoogleRetrievalService.currentRow);
 				formService.updateForm(f);
+				GoogleRetrievalService.currentRow+=1;
 				}
 				catch(Exception e)
 				{
