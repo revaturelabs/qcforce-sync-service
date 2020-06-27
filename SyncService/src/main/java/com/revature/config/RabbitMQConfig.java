@@ -4,10 +4,8 @@ import org.springframework.amqp.core.Binding;
 import org.springframework.amqp.core.BindingBuilder;
 import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Queue;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -17,34 +15,44 @@ import org.springframework.context.annotation.Configuration;
  */
 @Configuration
 public class RabbitMQConfig {
-	
+
 	/** * */
-	@Value("FormResponse-Queue")
-	public String queueName;
-	
+	public final static String queueFormResponse = "FormResponse-Queue";
+	public final static String batchFormResponse = "BatchData-Queue";
 	/** * */
-	@Value("FormResponse-Queue-Key")
-	public static String routingKey="FormResponse-Queue-Key";
-	
-	//TODO: This value should be changed - perhaps to "FormResponse-Exchange"
+	public final static String routingKeyFormResponse = "FormResponse-Queue-Key";
+	public final static String routingKeyBatchData = "BatchData-Key";
 	/** * */
-	@Value("WeisDirect")
-	public static String exchange="WeisDirect";
-	
+	public final static String exchangeFormResponse = "FormResponse-Exchange";
+	public final static String exchangeBatchData = "BatchData-Exchange";
+
 	/**
 	 * @return
 	 */
 	@Bean
 	public Queue queue() {
-		return new Queue(queueName, false);
+		return new Queue(queueFormResponse, false);
 	}
-	
+
+	@Bean
+	public Queue queue2() {
+		return new Queue(batchFormResponse, false);
+	}
+
 	/**
 	 * @return
 	 */
 	@Bean
 	public DirectExchange exchange() {
-		return new DirectExchange(exchange);
+		return new DirectExchange(exchangeFormResponse);
+	}
+
+	/**
+	 * @return
+	 */
+	@Bean
+	public DirectExchange exchange2() {
+		return new DirectExchange(exchangeBatchData);
 	}
 
 	/**
@@ -54,7 +62,12 @@ public class RabbitMQConfig {
 	 */
 	@Bean
 	public Binding binding(Queue queue, DirectExchange exchange) {
-		return BindingBuilder.bind(queue).to(exchange).with(routingKey);
+		return BindingBuilder.bind(queue).to(exchange).with(routingKeyFormResponse);
+	}
+
+	@Bean
+	public Binding binding2(Queue queue2, DirectExchange exchange2) {
+		return BindingBuilder.bind(queue2).to(exchange2).with(routingKeyBatchData);
 	}
 
 	/**
@@ -64,24 +77,5 @@ public class RabbitMQConfig {
 	public MessageConverter jsonMessageConverter() {
 		return new Jackson2JsonMessageConverter();
 	}
-
-	public String getQueueName() {
-		return queueName;
-	}
-
-	public void setQueueName(String queueName) {
-		this.queueName = queueName;
-	}
-
-	public String getRoutingKey() {
-		return routingKey;
-	}
-
-	public String getExchange() {
-		return exchange;
-	}
-
-	
-	
 
 }
