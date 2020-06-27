@@ -92,11 +92,18 @@ public class GoogleSheets {
 	 * @return
 	 */
 	public List<FormResponse> getFormResponses() {
-		int formIdCount = formService.getFormById(1).getFormId();
-		// TODO: Comment
+		
+		
 		List<FormResponse>forms=new ArrayList<FormResponse>();
-		// TODO: Comment
+		
 		List<List<String>> filteredData = getFilteredSheetData();
+		
+		System.out.println("Filtered data size: "+filteredData.size());
+		
+		if (filteredData.size()==0)
+		{
+			return new ArrayList<FormResponse>();
+		}
 		// TODO: Comment
 		List<String>questions=filteredData.get(0);
 		// TODO: Comment
@@ -111,16 +118,11 @@ public class GoogleSheets {
 			answers.remove(0);
 			temp.setQuestions(questions);
 			temp.setAnswers(answers);
-			temp.setFormId(i + formIdCount);
+			
 			forms.add(temp);
 		}
 		// TODO: Comment
-		formIdCount += filteredData.size() - 1;
-		Form lastForm=new Form();
-		lastForm.setId(1);
-		lastForm.setFormId(formIdCount);
-		formService.updateForm(lastForm);
-		// TODO: Comment
+
 		return forms;
 	}
 
@@ -131,30 +133,48 @@ public class GoogleSheets {
 		// TODO: Comment
 		String spreadsheetId = SheetsServiceConfig.spreadsheetId;
 		// TODO: Comment
-		String range = "Form Responses 1";
+		
+		int currentRow = formService.getFormById(1).getFormId();
+		
+		if (currentRow<=0)
+		{
+			currentRow=1;
+		}
+		
+		System.out.println("Current Row : "+currentRow);
+		
+		String range = "A"+(currentRow+1)+":ZZZ";
 		// TODO: Comment
-		ValueRange response;
+		ValueRange response,questions;
 		
 		// TODO: Comment
 		try {
+			questions = sheetsService.spreadsheets().values().get(spreadsheetId, "A1:1").execute();
 			// TODO: Comment
 			response = sheetsService.spreadsheets().values().get(spreadsheetId, range).execute();
 			// TODO: Comment
 			List<List<Object>> values = response.getValues();
 			
+			currentRow+=values.size();
+			Form f =new Form();
+			f.setId(1);
+			f.setFormId(currentRow);
+			formService.updateForm(f);
+			
+			values.add(0, questions.getValues().get(0));
 			/* 
 			 * TODO: Comment
 			 */
-			if (values == null || values.isEmpty()) {
-				System.out.println("No data found.");
-			} else {
-				return values;
-			}
-		} catch (IOException e) {
+			System.out.println(values);
+			
+			return values;
+			
+		} catch (Exception e) {
 			//TODO: Log this exception
 			e.printStackTrace();
+			return new ArrayList<List<Object>>();
 		}
-		return null;
+
 	}
 
 	/**
@@ -165,7 +185,6 @@ public class GoogleSheets {
 	public List<List<String>> convertRawToStringList(List<List<Object>> data) {
 		//TODO: Comment
 		List<List<String>> listOfLists = new ArrayList<List<String>>();
-		
 		/* 
 		 * TODO: Comment
 		 */
@@ -181,6 +200,10 @@ public class GoogleSheets {
 	 */
 	@SuppressWarnings("unchecked")
 	public List<List<String>> filterDup(List<List<String>> data) {
+		if(data.size()==0)
+		{
+			return new ArrayList<List<String>>();
+		}
 		// size test
 //		for (List row : data) {
 //			System.out.println("SIZE: " + row.size());
@@ -250,5 +273,11 @@ public class GoogleSheets {
 
 		return data;
 	}
+
+	public FormService getFormService() {
+		return formService;
+	}
+	
+	
 
 }

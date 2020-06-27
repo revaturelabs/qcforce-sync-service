@@ -23,6 +23,7 @@ public class SyncController {
 	GoogleSheets googleSheets;
 	
 	
+	
 	@Autowired
 	public void setGoogleSheets(GoogleSheets googleSheets)
 	{
@@ -40,5 +41,11 @@ public class SyncController {
 	{
 		return googleSheets.getFormResponses();
 	}
+	
+//	@GetMapping("/sync")
+//	public List<List<String>> displayCurrentCount()
+//	{
+//		return googleSheets.getFilteredSheetData();
+//	}
 
 }
