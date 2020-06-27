@@ -28,17 +28,16 @@ public class GoogleRetrievalService implements DataRetrievalService{
 	/** * */
 	private Sheets sheetsService;
 	
-	private int currentRow;
+	public static int currentRow;
 	
 	/** * */
 	private FormService formService;
-	
 	
 	/**
 	 * @param sheetsService
 	 */
 	@Autowired
-	private void setSheetsService(Sheets sheetsService) {
+	public void setSheetsService(Sheets sheetsService) {
 		this.sheetsService = sheetsService;
 	}
 	
@@ -46,7 +45,7 @@ public class GoogleRetrievalService implements DataRetrievalService{
 	 * @param formService
 	 */
 	@Autowired
-	private void setFormService(FormService formService) {
+	public void setFormService(FormService formService) {
 		this.formService = formService;
 	}
 	
@@ -81,14 +80,15 @@ public class GoogleRetrievalService implements DataRetrievalService{
 			}
 			
 			List<List<Object>> values = response.getValues();
-			//Updates 
-			currentRow+=values.size();
-			Form f =new Form();
-			f.setId(1);
-			f.setFormId(currentRow);
-			formService.updateForm(f);
-			values.add(0, questions.getValues().get(0));
-			return values;
+			if(values!=null)
+			{
+				values.add(0, questions.getValues().get(0));
+				return values;
+			}
+			else
+			{
+				return new ArrayList<List<Object>>();
+			}
 			
 		} catch (Exception e) {
 			//TODO: Log this exception

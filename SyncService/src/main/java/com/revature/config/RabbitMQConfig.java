@@ -24,12 +24,12 @@ public class RabbitMQConfig {
 	
 	/** * */
 	@Value("FormResponse-Queue-Key")
-	public static String routingKey;
+	public static String routingKey="FormResponse-Queue-Key";
 	
 	//TODO: This value should be changed - perhaps to "FormResponse-Exchange"
 	/** * */
 	@Value("WeisDirect")
-	public static String exchange;
+	public static String exchange="WeisDirect";
 	
 	/**
 	 * @return
