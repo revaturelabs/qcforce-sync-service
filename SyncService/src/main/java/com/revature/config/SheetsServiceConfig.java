@@ -31,17 +31,17 @@ public class SheetsServiceConfig {
 	// https://developers.google.com/identity/protocols/OAuth2ServiceAccount
 	/** * */
 	private final String CLIENT_ID = "projectsync@projectsync-281422.iam.gserviceaccount.com";
-	
+
 	// Add requested scopes.
 	/** * */
 	private final List<String> SCOPES = Arrays.asList("https://spreadsheets.google.com/feeds");
-	
+
 	// The name of the p12 file one created when obtaining the service account
 	/** * */
 	public static final String PREFIX = "projectsync-281422-0ea6cec11520";
 	/** * */
 	public static final String SUFFIX = ".p12";
-	
+
 	/** * */
 	public static final String spreadsheetId = "13KdjcScFGR7Z_pghP0BNXxYJ9tM9JAt9tctGq4wQSdA";
 	//public static final String spreadsheetId = "161u5xTW-Llo90hbpfpffPs6tvgS3-JIzJfsdHk8F3ms";
@@ -57,8 +57,8 @@ public class SheetsServiceConfig {
 		FileUtils.copyInputStreamToFile(inputStream, tempFile);
 		return tempFile;
 	}
-	
-	
+
+
 	/**
 	 * @return
 	 * @throws GeneralSecurityException
@@ -67,18 +67,18 @@ public class SheetsServiceConfig {
 	 */
 	@Bean
 	public GoogleCredential googleCredentials() throws GeneralSecurityException, IOException, URISyntaxException {
-		//TODO: Comment
+		// TODO: Comment
 		JacksonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
-		
-		//TODO: Comment
+
+		// TODO: Comment
 		HttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-		
+
 		/*
 		 * TODO: Comment
 		 */
 		InputStream inputStream = getClass().getClassLoader().getResourceAsStream(PREFIX+SUFFIX);
 		File test = inputStreamToFile(inputStream);
-		
+
 		/*
 		 * TODO: Comment
 		 */
@@ -87,8 +87,8 @@ public class SheetsServiceConfig {
 				.setServiceAccountPrivateKeyFromP12File(test)
 				.setServiceAccountScopes(SCOPES)
 				.build();
-		
-		//TODO: Comment
+
+		// TODO: Comment
 		credential.refreshToken();
 		return credential;
 	}

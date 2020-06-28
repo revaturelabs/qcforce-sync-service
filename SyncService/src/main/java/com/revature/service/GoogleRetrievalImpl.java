@@ -18,14 +18,13 @@ import com.revature.config.SheetsServiceConfig;
 @Service
 public class GoogleRetrievalImpl implements DataRetrievalService{
 
-	/** * */
 	private Sheets sheetsService;
-	
+
 	private FormService formService;
-	
+
 	/** * */
 	public static int currentRow;
-	
+
 	/**
 	 * @param sheetsService
 	 */
@@ -33,47 +32,43 @@ public class GoogleRetrievalImpl implements DataRetrievalService{
 	public void setSheetsService(Sheets sheetsService) {
 		this.sheetsService = sheetsService;
 	}
-	
+
 	@Autowired
 	public void setFormService(FormService formService) {
 		this.formService = formService;
 	}
-	
+
 	@Override
 	public List<List<Object>> retrieveRawSheetData() {
 		// TODO: Comment
 		String spreadsheetId = SheetsServiceConfig.spreadsheetId;
 		// TODO: Comment
-		
+
 		currentRow = formService.getFormById(1).getFormId();
-		
-		currentRow+=1;
-		String range = "A"+(currentRow)+":ZZZ";
+
+		currentRow += 1;
+		String range = "A" + (currentRow) + ":ZZZ";
 		// TODO: Comment
-		ValueRange response,questions;
-		
+		ValueRange response, questions;
+
 		// TODO: Comment
 		try {
 			questions = sheetsService.spreadsheets().values().get(spreadsheetId, "A1:1").execute();
 			response = sheetsService.spreadsheets().values().get(spreadsheetId, range).execute();
-			if(formService.getFormById(1).getFormId()+1!=currentRow)
-			{
+			if (formService.getFormById(1).getFormId() + 1 != currentRow) {
 				return new ArrayList<List<Object>>();
 			}
-			
+
 			List<List<Object>> values = response.getValues();
-			if(values!=null)
-			{
+			if (values != null) {
 				values.add(0, questions.getValues().get(0));
 				return values;
-			}
-			else
-			{
+			} else {
 				return new ArrayList<List<Object>>();
 			}
-			
+
 		} catch (Exception e) {
-			//TODO: Log this exception
+			// TODO: Log this exception
 			e.printStackTrace();
 			return new ArrayList<List<Object>>();
 		}
