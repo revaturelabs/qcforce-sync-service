@@ -4,8 +4,10 @@ import java.util.List;
 
 import com.revature.domain.Batch;
 
+import reactor.core.publisher.Mono;
+
 public interface MessageService {
-	public void sendData();
+	public Mono<Void> sendData();
 
 	public void sendBatchData(List<Batch> data);
 }

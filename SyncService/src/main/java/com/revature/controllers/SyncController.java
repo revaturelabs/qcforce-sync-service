@@ -28,6 +28,11 @@ public class SyncController {
 		return Mono.fromRunnable(() -> messageService.sendData()).subscribeOn(Schedulers.elastic()).then();
 	}
 
+	@PostMapping("/sync2")
+	public Mono<Void> triggerSyncService2() {
+		return Mono.fromRunnable(() -> messageService.sendData()).subscribeOn(Schedulers.elastic()).then();
+	}
+
 //	@GetMapping("/sync")
 //	public List<List<String>> displayCurrentCount()
 //	{

@@ -12,6 +12,8 @@ import com.revature.domain.Batch;
 import com.revature.domain.Form;
 import com.revature.models.FormResponse;
 
+import reactor.core.publisher.Mono;
+
 @Service
 public class RabbitMQService implements MessageService {
 
@@ -57,7 +59,7 @@ public class RabbitMQService implements MessageService {
 	}
 
 	@Override
-	public void sendData() {
+	public Mono<Void> sendData() {
 		rabbitTemplate.setMessageConverter(messageConverter);
 		List<FormResponse> data = dataFilterService.mapFormResponses();
 		System.out.println("Data:\n" + data);
@@ -83,6 +85,8 @@ public class RabbitMQService implements MessageService {
 				break;
 			}
 		}
+		return Mono.empty();
+
 	}
 
 	@Override
