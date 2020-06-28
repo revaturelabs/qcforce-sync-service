@@ -6,8 +6,8 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
 /**
+ * QCForce Sync Service Application Main Class
  * @author Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
- *
  */
 @SpringBootApplication
 @EnableJpaRepositories
@@ -15,7 +15,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 public class SyncServiceApplication {
 
 	/**
-	 * @param args
+	 * @param args input parameters passed in when running the application. 
 	 */
 	public static void main(String[] args) {
 		SpringApplication.run(SyncServiceApplication.class, args);

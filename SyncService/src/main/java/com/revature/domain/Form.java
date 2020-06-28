@@ -13,37 +13,35 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 /**
+ * This class represents form data from form submissions.
  * @author Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
- *
  */
 @Entity
 @Table(name= "form")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property ="id")
 public class Form implements Serializable{
 
-	/** * */
+	
+	/**
+	 *	Serializable version UID 
+	 */
 	private static final long serialVersionUID = 3333672074531118712L;
 
-	/** * */
+	/**
+	 *	variable of type {@link Integer} that represents the internal form id used by the database. 
+	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
-	int id;
-
-	/** * */
-	@Column(name = "form_id")
-	int formId;
+	private int id;
 
 	/**
-	 * @param id
-	 * @param formId
+	 *	variable of type {@link Integer} that represents the id linked to a row in the response spreadsheet. 
 	 */
-	public Form(int id, int formId) {
-		super();
-		this.id = id;
-		this.formId = formId;
-	}
+	@Column(name = "form_id")
+	private int formId;
 
+	
 	/**
 	 * @return
 	 */

@@ -18,7 +18,7 @@ import com.revature.models.FormResponse;
 public class GoogleFilterImpl implements DataFilterService{
 
 	private DataRetrievalService dataRetrievalService;
-
+	
 	@Autowired
 	public void setDataRetrievalService(DataRetrievalService dataRetrievalService) {
 		this.dataRetrievalService = dataRetrievalService;
@@ -129,6 +129,7 @@ public class GoogleFilterImpl implements DataFilterService{
 		for(int i = 1 ;i < filteredData.size(); i++)
 		{
 			FormResponse temp =new FormResponse();
+			temp.setFormId(i);
 			temp.setTimestamp(filteredData.get(i).get(0));
 			List<String> answers = filteredData.get(i);
 			answers.remove(0);
