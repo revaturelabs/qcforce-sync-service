@@ -1,9 +1,14 @@
 package com.revature.config;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardCopyOption;
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
 import java.util.List;
@@ -17,6 +22,7 @@ import com.google.api.client.http.HttpTransport;
 import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
+import com.google.api.client.util.IOUtils;
 import com.google.api.services.sheets.v4.Sheets;
 
 /**
@@ -56,15 +62,16 @@ public class SheetsServiceConfig {
 		//TODO: Comment
 		HttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
 		
-		//TODO: Comment
-		URL fileUrl = this.getClass().getResource(P12FILE);
-		
+		InputStream inputStream = getClass().getClassLoader()
+				.getResourceAsStream("projectsync-281422-0ea6cec11520.p12");
+		File test = stream2file(inputStream);
 		//TODO: Comment
 		GoogleCredential credential = new GoogleCredential.Builder().setTransport(httpTransport)
 				//TODO: Comment
 				.setJsonFactory(JSON_FACTORY).setServiceAccountId(CLIENT_ID)
 				//TODO: Comment
-				.setServiceAccountPrivateKeyFromP12File(new File(fileUrl.toURI())).setServiceAccountScopes(SCOPES)
+				.setServiceAccountPrivateKeyFromP12File(test)
+				.setServiceAccountScopes(SCOPES)
 				//TODO: Comment
 				.build();
 		
@@ -73,6 +80,17 @@ public class SheetsServiceConfig {
 		return credential;
 	}
 
+	
+	public static final String PREFIX = "projectsync-281422-0ea6cec11520";
+	public static final String SUFFIX = ".p12";
+	public static File stream2file(InputStream in) throws IOException {
+		final File tempFile = File.createTempFile(PREFIX, SUFFIX);
+		tempFile.deleteOnExit();
+		try (FileOutputStream out = new FileOutputStream(tempFile)) {
+			IOUtils.copy(in, out);
+		}
+		return tempFile;
+	}
 	/**
 	 * @return
 	 * @throws GeneralSecurityException
