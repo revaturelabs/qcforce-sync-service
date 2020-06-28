@@ -80,9 +80,11 @@ public class RabbitMQImpl implements MessageService {
 					rabbitTemplate.convertAndSend(RabbitMQConfig.exchangeFormResponse,
 							RabbitMQConfig.routingKeyFormResponse, row);
 					// Updates
-					Form f = new Form(1,GoogleRetrievalImpl.currentRow);
+					Form f = new Form();
+					f.setId(1);
+					f.setFormId(GoogleRetrievalImpl.currentRow);
 					formService.updateForm(f);
-					GoogleRetrievalImpl.currentRow += 1;
+					GoogleRetrievalImpl.currentRow+=1;
 				} catch (Exception e) {
 					e.printStackTrace();
 					System.out.println("Insertion Issue check connection or cue configuration");

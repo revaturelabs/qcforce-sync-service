@@ -13,15 +13,15 @@ import org.apache.logging.log4j.LogManager;
 
 
 /**
+ * QCForce Sync Service Application Main Class
  * @author Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
- *
  */
 @SpringBootApplication
 @EnableJpaRepositories
 @EnableScheduling
 public class SyncServiceApplication {
 	/**
-	 * @param args
+	 * @param args input parameters passed in when running the application. 
 	 */
 	public static void main(String[] args) {
 		SpringApplication.run(SyncServiceApplication.class, args);

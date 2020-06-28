@@ -50,13 +50,13 @@ public class GoogleRetrievalImpl implements DataRetrievalService{
 	@Override
 	public List<List<Object>> retrieveRawSheetData() {
 		// TODO: Comment
-		String spreadsheetId = SheetsServiceConfig.spreadsheetId;
+		String spreadsheetId = SheetsServiceConfig.SPREAD_SHEET_ID;
 		// TODO: Comment
 
 		currentRow = formService.getFormById(1).getFormId();
 
 		currentRow += 1;
-		String range = "A" + (currentRow) + ":ZZZ";
+		String range = "A" + (currentRow+1) + ":ZZZ";
 		// TODO: Comment
 		ValueRange response, questions;
 
