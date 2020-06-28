@@ -5,6 +5,7 @@ import java.util.List;
 import org.mortbay.log.Log;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.MessageConverter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.revature.config.RabbitMQConfig;
@@ -54,6 +55,16 @@ public class RabbitMQImpl implements MessageService {
 	public void setFormService(FormService formService) {
 		this.formService = formService;
 	}
+	
+	/*
+	public RabbitMQImpl(RabbitTemplate rabbitTemplate, MessageConverter messageConverter,
+			DataFilterService dataFilterService, FormService formService) {
+		super();
+		this.rabbitTemplate = rabbitTemplate;
+		this.messageConverter = messageConverter;
+		this.dataFilterService = dataFilterService;
+	}
+	*/
 
 
 	@Override

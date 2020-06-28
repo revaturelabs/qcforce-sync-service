@@ -17,7 +17,8 @@ import com.revature.config.SheetsServiceConfig;
  */
 @Service
 public class GoogleRetrievalImpl implements DataRetrievalService{
-
+	
+	/** * */
 	private Sheets sheetsService;
 
 	private FormService formService;
@@ -37,6 +38,14 @@ public class GoogleRetrievalImpl implements DataRetrievalService{
 	public void setFormService(FormService formService) {
 		this.formService = formService;
 	}
+	
+	/*
+	public GoogleRetrievalImpl(Sheets sheetsService, FormService formService) {
+		super();
+		this.sheetsService = sheetsService;
+		this.formService = formService;
+	}
+	*/
 
 	@Override
 	public List<List<Object>> retrieveRawSheetData() {

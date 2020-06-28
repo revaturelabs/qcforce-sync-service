@@ -125,8 +125,8 @@ public class GoogleFilterImpl implements DataFilterService{
 		List<String> questions = filteredData.get(0);
 		questions.remove(0);
 
-		//Cycle through filtered data and create a new form response & add it to the returned array
-		for(int i=1;i< filteredData.size();i++)
+		//Cycling through filtered data, create a new form response & add it to the returned array
+		for(int i = 1 ;i < filteredData.size(); i++)
 		{
 			FormResponse temp =new FormResponse();
 			temp.setTimestamp(filteredData.get(i).get(0));
