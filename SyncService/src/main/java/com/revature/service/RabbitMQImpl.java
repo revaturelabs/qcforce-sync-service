@@ -12,25 +12,22 @@ import com.revature.domain.Batch;
 import com.revature.domain.Form;
 import com.revature.models.FormResponse;
 
+/**
+ * @author Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
+ *
+ */
 @Service
-public class RabbitMQService implements MessageService {
-
+public class RabbitMQImpl implements MessageService {
+	
+	/** * */
 	private RabbitTemplate rabbitTemplate;
-
+	
+	/** * */
 	private MessageConverter messageConverter;
-
+	
 	private DataFilterService dataFilterService;
 
-	/** * */
 	private FormService formService;
-
-	/**
-	 * @param formService
-	 */
-	@Autowired
-	public void setFormService(FormService formService) {
-		this.formService = formService;
-	}
 
 	/**
 	 * @param rabbitTemplate
@@ -39,15 +36,7 @@ public class RabbitMQService implements MessageService {
 	public void setRabbitTemplate(RabbitTemplate rabbitTemplate) {
 		this.rabbitTemplate = rabbitTemplate;
 	}
-
-	/**
-	 * @param dataRetrievalService
-	 */
-	@Autowired
-	public void setDataFilterService(DataFilterService dataFilterService) {
-		this.dataFilterService = dataFilterService;
-	}
-
+	
 	/**
 	 * @param messageConverter
 	 */
@@ -56,24 +45,33 @@ public class RabbitMQService implements MessageService {
 		this.messageConverter = messageConverter;
 	}
 
+	@Autowired
+	public void setDataFilterService(DataFilterService dataFilterService) {
+		this.dataFilterService = dataFilterService;
+	}
+	
+	@Autowired
+	public void setFormService(FormService formService) {
+		this.formService = formService;
+	}
+
+	
 	@Override
 	public void sendData() {
 		rabbitTemplate.setMessageConverter(messageConverter);
 		List<FormResponse> data = dataFilterService.mapFormResponses();
 		System.out.println("Data:\n" + data);
 		for (FormResponse row : data) {
-			System.out.println("Current Row:" + GoogleRetrievalService.currentRow);
+			System.out.println("Current Row:" + GoogleRetrievalImpl.currentRow);
 			System.out.println("Database Row:" + (formService.getFormById(1).getFormId() + 1));
-			if ((formService.getFormById(1).getFormId() + 1) == GoogleRetrievalService.currentRow) {
+			if ((formService.getFormById(1).getFormId() + 1) == GoogleRetrievalImpl.currentRow) {
 				try {
 					rabbitTemplate.convertAndSend(RabbitMQConfig.exchangeFormResponse,
 							RabbitMQConfig.routingKeyFormResponse, row);
 					// Updates
-					Form f = new Form();
-					f.setId(1);
-					f.setFormId(GoogleRetrievalService.currentRow);
+					Form f = new Form(1,GoogleRetrievalImpl.currentRow);
 					formService.updateForm(f);
-					GoogleRetrievalService.currentRow += 1;
+					GoogleRetrievalImpl.currentRow += 1;
 				} catch (Exception e) {
 					e.printStackTrace();
 					System.out.println("Insertion Issue check connection or cue configuration");
@@ -85,6 +83,7 @@ public class RabbitMQService implements MessageService {
 		}
 	}
 
+	
 	@Override
 	public void sendBatchData(List<Batch> data) {
 		rabbitTemplate.setMessageConverter(messageConverter);

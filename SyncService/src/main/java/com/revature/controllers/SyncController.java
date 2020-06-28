@@ -24,20 +24,20 @@ public class SyncController {
 		this.messageService = messageService;
 	}
 
+	/**
+	 * @return
+	 */
 	@PostMapping("/sync")
 	public Mono<Void> triggerSyncService() {
 		return Mono.fromRunnable(() -> messageService.sendData()).subscribeOn(Schedulers.elastic()).then();
 	}
-	
+
+	/**
+	 * @return
+	 */
 	@GetMapping("/sync")
 	public Mono<Void> getSyncService() {
 		return Mono.fromRunnable(() -> messageService.sendData()).subscribeOn(Schedulers.elastic()).then();
 	}
-
-//	@GetMapping("/sync")
-//	public List<List<String>> displayCurrentCount()
-//	{
-//		return googleSheets.getFilteredSheetData();
-//	}
 
 }

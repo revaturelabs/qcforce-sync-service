@@ -81,9 +81,6 @@ public class FormResponse implements Serializable {
 		this.answers = answers;
 	}
 
-	/**
-	 *
-	 */
 	@Override
 	public String toString() {
 		return "FormResponse [formId=" + formId + ", timestamp=" + timestamp + ", questions=" + questions + ", answers="

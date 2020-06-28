@@ -6,6 +6,10 @@ import org.springframework.stereotype.Component;
 
 import com.revature.service.MessageService;
 
+/**
+ * @author Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
+ *
+ */
 @Component
 public class Scheduler {
 	private MessageService messageService;
@@ -15,6 +19,9 @@ public class Scheduler {
 		this.messageService = messageService;
 	}
 
+	/**
+	 * 
+	 */
 	@Scheduled(fixedDelay = 86400000, initialDelay = 300000)
 	public void triggerSync() {
 		messageService.sendData();

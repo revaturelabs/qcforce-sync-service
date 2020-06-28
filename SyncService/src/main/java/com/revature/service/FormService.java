@@ -5,17 +5,37 @@ import java.util.List;
 import com.revature.domain.Form;
 
 
+/**
+ * @author Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
+ *
+ */
 public interface FormService {
 	
-		public List<Form> getAllForms();
+	/**
+	 * @return
+	 */
+	public List<Form> getAllForms();
 		
-		public Form getFormById(int id);
+	/**
+	 * @param id
+	 * @return
+	 */
+	public Form getFormById(int id);
 		
-		public void createForm(Form question);
+	/**
+	 * @param question
+	 */
+	public void createForm(Form question);
 		
-		public void updateForm(Form question);
+	/**
+	 * @param question
+	 */
+	public void updateForm(Form question);
 		
-		public void deleteForm(Form question);
+	/**
+	 * @param question
+	 */
+	public void deleteForm(Form question);
 		
 
 }

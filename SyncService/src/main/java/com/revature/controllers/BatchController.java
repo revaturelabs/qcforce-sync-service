@@ -13,6 +13,10 @@ import com.revature.service.MessageService;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
+/**
+ * @author Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
+ *
+ */
 @RestController
 public class BatchController {
 
@@ -23,9 +27,13 @@ public class BatchController {
 		this.messageService = messageService;
 	}
 
+	/**
+	 * @param data
+	 * @return
+	 */
 	@PostMapping("/batch")
-	public void uploadJSON(@RequestBody List<Batch> data) {
-		Mono.fromRunnable(() -> messageService.sendBatchData(data)).subscribeOn(Schedulers.elastic()).then();
+	public Mono<Void> uploadJSON(@RequestBody List<Batch> data) {
+		return Mono.fromRunnable(() -> messageService.sendBatchData(data)).subscribeOn(Schedulers.elastic()).then();
 	}
 
 }

@@ -18,12 +18,15 @@ public class RabbitMQConfig {
 
 	/** * */
 	public final static String queueFormResponse = "FormResponse-Queue";
+	/** * */
 	public final static String batchFormResponse = "BatchData-Queue";
 	/** * */
 	public final static String routingKeyFormResponse = "FormResponse-Queue-Key";
+	/** * */
 	public final static String routingKeyBatchData = "BatchData-Key";
 	/** * */
 	public final static String exchangeFormResponse = "FormResponse-Exchange";
+	/** * */
 	public final static String exchangeBatchData = "BatchData-Exchange";
 
 	/**
@@ -34,6 +37,9 @@ public class RabbitMQConfig {
 		return new Queue(queueFormResponse, false);
 	}
 
+	/**
+	 * @return
+	 */
 	@Bean
 	public Queue queue2() {
 		return new Queue(batchFormResponse, false);
@@ -65,6 +71,11 @@ public class RabbitMQConfig {
 		return BindingBuilder.bind(queue).to(exchange).with(routingKeyFormResponse);
 	}
 
+	/**
+	 * @param queue2
+	 * @param exchange2
+	 * @return
+	 */
 	@Bean
 	public Binding binding2(Queue queue2, DirectExchange exchange2) {
 		return BindingBuilder.bind(queue2).to(exchange2).with(routingKeyBatchData);

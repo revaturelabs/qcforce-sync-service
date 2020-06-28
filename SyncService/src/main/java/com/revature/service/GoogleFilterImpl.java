@@ -9,32 +9,27 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.revature.models.FormResponse;
+
+/**
+ * @author Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
+ *
+ */
 @Service
-public class GoogleFilterService implements DataFilterService{
+public class GoogleFilterImpl implements DataFilterService{
 
 	private DataRetrievalService dataRetrievalService;
 	
-	/**
-	 * @param dataRetrievalService
-	 */
 	@Autowired
 	public void setDataRetrievalService(DataRetrievalService dataRetrievalService) {
 		this.dataRetrievalService = dataRetrievalService;
 	}
 	
 	
-	/**
-	 * @return
-	 */
 	@Override
 	public List<List<String>> getFilteredSheetData() {
 		return filterDup(convertRawToStringList(dataRetrievalService.retrieveRawSheetData()));
 	}
 	
-	/**
-	 * @param data
-	 * @return
-	 */
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<List<String>> convertRawToStringList(List<List<Object>> data) {
@@ -49,21 +44,14 @@ public class GoogleFilterService implements DataFilterService{
 		return listOfLists;
 	}
 	
-	/**
-	 * @param data
-	 * @return
-	 */
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<List<String>> filterDup(List<List<String>> data) {
-		if(data.size()==0)
-		{
+		
+		if(data.size()==0){
 			return new ArrayList<List<String>>();
 		}
-		// size test
-//		for (List row : data) {
-//			System.out.println("SIZE: " + row.size());
-//		}
+
 		//TODO: Comment
 		List<String> questions = data.get(0);
 		
@@ -87,7 +75,6 @@ public class GoogleFilterService implements DataFilterService{
 		/* 
 		 * Remove duplicate questions
 		 */
-		//TODO: Comment
 		Set<String> set = new LinkedHashSet<String>();
 		//TODO: Comment
 		set.addAll(questions);
@@ -130,9 +117,6 @@ public class GoogleFilterService implements DataFilterService{
 		return data;
 	}
 	
-	/**
-	 * @return
-	 */
 	@Override
 	public List<FormResponse> mapFormResponses() {
 		
@@ -149,7 +133,7 @@ public class GoogleFilterService implements DataFilterService{
 		// TODO: Comment
 		questions.remove(0);
 		
-		//Cycle through filtered data and create a new form response and add it to the returned array
+		//Cycle through filtered data and create a new form response & add it to the returned array
 		for(int i=1;i< filteredData.size();i++)
 		{
 			FormResponse temp =new FormResponse();

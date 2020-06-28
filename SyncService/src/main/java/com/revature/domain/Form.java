@@ -12,33 +12,62 @@ import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
+/**
+ * @author Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
+ *
+ */
 @Entity
 @Table(name= "form")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property ="id")
 public class Form implements Serializable{
-	
+
+	/** * */
 	private static final long serialVersionUID = 3333672074531118712L;
 
+	/** * */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	int id;
-	
+
+	/** * */
 	@Column(name = "form_id")
 	int formId;
 
+	/**
+	 * @param id
+	 * @param formId
+	 */
+	public Form(int id, int formId) {
+		super();
+		this.id = id;
+		this.formId = formId;
+	}
+
+	/**
+	 * @return
+	 */
 	public int getId() {
 		return id;
 	}
 
+	/**
+	 * @param id
+	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
+	/**
+	 * @return
+	 */
 	public int getFormId() {
 		return formId;
 	}
 
+	/**
+	 * @param formId
+	 */
 	public void setFormId(int formId) {
 		this.formId = formId;
 	}
@@ -72,6 +101,6 @@ public class Form implements Serializable{
 	public String toString() {
 		return "Form [id=" + id + ", formId=" + formId + "]";
 	}
-	
-	
+
+
 }

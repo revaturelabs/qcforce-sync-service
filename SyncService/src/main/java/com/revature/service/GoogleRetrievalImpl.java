@@ -1,37 +1,30 @@
 package com.revature.service;
 
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.LinkedHashSet;
 import java.util.List;
-import java.util.Set;
 
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.ValueRange;
-import com.revature.config.RabbitMQConfig;
+
 import com.revature.config.SheetsServiceConfig;
-import com.revature.domain.Form;
-import com.revature.models.FormResponse;
 
 /**
  * @authors Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
  *
  */
 @Service
-public class GoogleRetrievalService implements DataRetrievalService{
+public class GoogleRetrievalImpl implements DataRetrievalService{
 
 	/** * */
 	private Sheets sheetsService;
 	
-	public static int currentRow;
+	private FormService formService;
 	
 	/** * */
-	private FormService formService;
+	public static int currentRow;
 	
 	/**
 	 * @param sheetsService
@@ -41,17 +34,11 @@ public class GoogleRetrievalService implements DataRetrievalService{
 		this.sheetsService = sheetsService;
 	}
 	
-	/**
-	 * @param formService
-	 */
 	@Autowired
 	public void setFormService(FormService formService) {
 		this.formService = formService;
 	}
 	
-	/**
-	 * @return
-	 */
 	@Override
 	public List<List<Object>> retrieveRawSheetData() {
 		// TODO: Comment
