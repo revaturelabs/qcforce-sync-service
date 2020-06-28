@@ -5,7 +5,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
 import java.util.List;
@@ -61,28 +60,36 @@ public class SheetsServiceConfig {
 		// TODO: Comment
 		HttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
 
-		File file = new File(getClass().getClassLoader().getResource("projectsync-281422-0ea6cec11520.p12").getFile());
-
-		// TODO: Comment
-
-		URL fileUrl = this.getClass().getResource(P12FILE);
-
 		InputStream inputStream = getClass().getClassLoader()
 				.getResourceAsStream("projectsync-281422-0ea6cec11520.p12");
 		File test = stream2file(inputStream);
-
 		// TODO: Comment
+
 		GoogleCredential credential = new GoogleCredential.Builder().setTransport(httpTransport)
 				// TODO: Comment
 				.setJsonFactory(JSON_FACTORY).setServiceAccountId(CLIENT_ID)
+
 				// TODO: Comment
 				.setServiceAccountPrivateKeyFromP12File(test).setServiceAccountScopes(SCOPES)
 				// TODO: Comment
+
 				.build();
 
 		// TODO: Comment
 		credential.refreshToken();
 		return credential;
+	}
+
+	public static final String PREFIX = "projectsync-281422-0ea6cec11520";
+	public static final String SUFFIX = ".p12";
+
+	public static File stream2file(InputStream in) throws IOException {
+		final File tempFile = File.createTempFile(PREFIX, SUFFIX);
+		tempFile.deleteOnExit();
+		try (FileOutputStream out = new FileOutputStream(tempFile)) {
+			IOUtils.copy(in, out);
+		}
+		return tempFile;
 	}
 
 	/**
@@ -115,18 +122,6 @@ public class SheetsServiceConfig {
 			GoogleCredential googleCredential) {
 		return new Sheets.Builder(httpTransport, jsonFactory, googleCredential).setApplicationName("My Application")
 				.build();
-	}
-
-	public static final String PREFIX = "projectsync-281422-0ea6cec11520";
-	public static final String SUFFIX = ".p12";
-
-	public static File stream2file(InputStream in) throws IOException {
-		final File tempFile = File.createTempFile(PREFIX, SUFFIX);
-		tempFile.deleteOnExit();
-		try (FileOutputStream out = new FileOutputStream(tempFile)) {
-			IOUtils.copy(in, out);
-		}
-		return tempFile;
 	}
 
 }

@@ -24,8 +24,8 @@ public class BatchController {
 	}
 
 	@PostMapping("/batch")
-	public Mono<Void> uploadJSON(@RequestBody List<Batch> data) {
-		return Mono.fromRunnable(() -> messageService.sendBatchData(data)).subscribeOn(Schedulers.elastic()).then();
+	public void uploadJSON(@RequestBody List<Batch> data) {
+		Mono.fromRunnable(() -> messageService.sendBatchData(data)).subscribeOn(Schedulers.elastic()).then();
 	}
 
 }
