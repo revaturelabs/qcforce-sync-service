@@ -2,6 +2,7 @@ package com.revature.controllers;
 
 import java.util.List;
 
+import org.mortbay.log.Log;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,8 +25,9 @@ public class BatchController {
 	}
 
 	@PostMapping("/batch")
-	public void uploadJSON(@RequestBody List<Batch> data) {
-		Mono.fromRunnable(() -> messageService.sendBatchData(data)).subscribeOn(Schedulers.elastic()).then();
+	public Mono<Void> uploadJSON(@RequestBody List<Batch> data) {
+		Log.debug("uploadJson Called");
+		return Mono.fromRunnable(() -> messageService.sendBatchData(data)).subscribeOn(Schedulers.elastic()).then();
 	}
 
 }

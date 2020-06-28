@@ -13,17 +13,17 @@ import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
-@Table(name= "form")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property ="id")
-public class Form implements Serializable{
-	
+@Table(name = "form")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+public class Form implements Serializable {
+
 	private static final long serialVersionUID = 3333672074531118712L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "id")
 	int id;
-	
+
 	@Column(name = "form_id")
 	int formId;
 
@@ -72,6 +72,5 @@ public class Form implements Serializable{
 	public String toString() {
 		return "Form [id=" + id + ", formId=" + formId + "]";
 	}
-	
-	
+
 }

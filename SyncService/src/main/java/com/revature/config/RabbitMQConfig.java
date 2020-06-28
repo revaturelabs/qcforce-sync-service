@@ -31,12 +31,12 @@ public class RabbitMQConfig {
 	 */
 	@Bean
 	public Queue queue() {
-		return new Queue(queueFormResponse, false);
+		return new Queue(queueFormResponse, true);
 	}
 
 	@Bean
 	public Queue queue2() {
-		return new Queue(batchFormResponse, false);
+		return new Queue(batchFormResponse, true);
 	}
 
 	/**

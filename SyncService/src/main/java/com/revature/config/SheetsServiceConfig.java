@@ -5,10 +5,6 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URISyntaxException;
-import java.net.URL;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.StandardCopyOption;
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
 import java.util.List;
@@ -36,18 +32,20 @@ public class SheetsServiceConfig {
 	// https://developers.google.com/identity/protocols/OAuth2ServiceAccount
 	/** * */
 	private final String CLIENT_ID = "projectsync@projectsync-281422.iam.gserviceaccount.com";
-	
+
 	// Add requested scopes.
 	/** * */
 	private final List<String> SCOPES = Arrays.asList("https://spreadsheets.google.com/feeds");
-	
+
 	// The name of the p12 file one created when obtaining the service account
 	/** * */
-	private final String P12FILE = "/projectsync-281422-0ea6cec11520.p12";
+	private final String P12FILE = "projectsync-281422-0ea6cec11520.p12";
 
 	/** * */
 	public static final String spreadsheetId = "13KdjcScFGR7Z_pghP0BNXxYJ9tM9JAt9tctGq4wQSdA";
-	//public static final String spreadsheetId = "161u5xTW-Llo90hbpfpffPs6tvgS3-JIzJfsdHk8F3ms";
+
+	// public static final String spreadsheetId =
+	// "161u5xTW-Llo90hbpfpffPs6tvgS3-JIzJfsdHk8F3ms";
 	/**
 	 * @return
 	 * @throws GeneralSecurityException
@@ -56,33 +54,31 @@ public class SheetsServiceConfig {
 	 */
 	@Bean
 	public GoogleCredential googleCredentials() throws GeneralSecurityException, IOException, URISyntaxException {
-		//TODO: Comment
+		// TODO: Comment
 		JacksonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
-		
-		//TODO: Comment
+
+		// TODO: Comment
 		HttpTransport httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-		
-		InputStream inputStream = getClass().getClassLoader()
-				.getResourceAsStream("projectsync-281422-0ea6cec11520.p12");
+
+		InputStream inputStream = getClass().getClassLoader().getResourceAsStream(P12FILE);
 		File test = stream2file(inputStream);
-		//TODO: Comment
+		// TODO: Comment
 		GoogleCredential credential = new GoogleCredential.Builder().setTransport(httpTransport)
-				//TODO: Comment
+				// TODO: Comment
 				.setJsonFactory(JSON_FACTORY).setServiceAccountId(CLIENT_ID)
-				//TODO: Comment
-				.setServiceAccountPrivateKeyFromP12File(test)
-				.setServiceAccountScopes(SCOPES)
-				//TODO: Comment
+				// TODO: Comment
+				.setServiceAccountPrivateKeyFromP12File(test).setServiceAccountScopes(SCOPES)
+				// TODO: Comment
 				.build();
-		
-		//TODO: Comment
+
+		// TODO: Comment
 		credential.refreshToken();
 		return credential;
 	}
 
-	
-	public static final String PREFIX = "projectsync-281422-0ea6cec11520";
+	public static final String PREFIX = "tempCredentialFile";
 	public static final String SUFFIX = ".p12";
+
 	public static File stream2file(InputStream in) throws IOException {
 		final File tempFile = File.createTempFile(PREFIX, SUFFIX);
 		tempFile.deleteOnExit();
@@ -91,6 +87,7 @@ public class SheetsServiceConfig {
 		}
 		return tempFile;
 	}
+
 	/**
 	 * @return
 	 * @throws GeneralSecurityException

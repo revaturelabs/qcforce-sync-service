@@ -2,9 +2,9 @@ package com.revature.service;
 
 import java.util.List;
 
+import org.mortbay.log.Log;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.MessageConverter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.revature.config.RabbitMQConfig;
@@ -21,39 +21,15 @@ public class RabbitMQService implements MessageService {
 
 	private DataFilterService dataFilterService;
 
-	/** * */
 	private FormService formService;
 
-	/**
-	 * @param formService
-	 */
-	@Autowired
-	public void setFormService(FormService formService) {
-		this.formService = formService;
-	}
-
-	/**
-	 * @param rabbitTemplate
-	 */
-	@Autowired
-	public void setRabbitTemplate(RabbitTemplate rabbitTemplate) {
+	public RabbitMQService(RabbitTemplate rabbitTemplate, MessageConverter messageConverter,
+			DataFilterService dataFilterService, FormService formService) {
+		super();
 		this.rabbitTemplate = rabbitTemplate;
-	}
-
-	/**
-	 * @param dataRetrievalService
-	 */
-	@Autowired
-	public void setDataFilterService(DataFilterService dataFilterService) {
-		this.dataFilterService = dataFilterService;
-	}
-
-	/**
-	 * @param messageConverter
-	 */
-	@Autowired
-	public void setMessageConverter(MessageConverter messageConverter) {
 		this.messageConverter = messageConverter;
+		this.dataFilterService = dataFilterService;
+		this.formService = formService;
 	}
 
 	@Override
@@ -89,10 +65,10 @@ public class RabbitMQService implements MessageService {
 	public void sendBatchData(List<Batch> data) {
 		rabbitTemplate.setMessageConverter(messageConverter);
 		for (Batch batchData : data) {
-			System.out.println(batchData.toString());
 			rabbitTemplate.convertAndSend(RabbitMQConfig.exchangeBatchData, RabbitMQConfig.routingKeyBatchData,
 					batchData);
 		}
+		Log.debug("in send batch data");
 	}
 
 }

@@ -28,16 +28,10 @@ public class SyncController {
 	public Mono<Void> triggerSyncService() {
 		return Mono.fromRunnable(() -> messageService.sendData()).subscribeOn(Schedulers.elastic()).then();
 	}
-	
+
 	@GetMapping("/sync")
 	public Mono<Void> getSyncService() {
 		return Mono.fromRunnable(() -> messageService.sendData()).subscribeOn(Schedulers.elastic()).then();
 	}
-
-//	@GetMapping("/sync")
-//	public List<List<String>> displayCurrentCount()
-//	{
-//		return googleSheets.getFilteredSheetData();
-//	}
 
 }
