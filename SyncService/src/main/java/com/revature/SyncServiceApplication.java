@@ -5,8 +5,8 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.scheduling.annotation.EnableScheduling;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+//import org.slf4j.Logger;
+//import org.slf4j.LoggerFactory;
 
 import org.apache.logging.log4j.Logger;
 import org.apache.logging.log4j.LogManager;
@@ -20,6 +20,7 @@ import org.apache.logging.log4j.LogManager;
 @EnableJpaRepositories
 @EnableScheduling
 public class SyncServiceApplication {
+	private static final Logger LOGGER = LogManager.getLogger(SyncServiceApplication.class); //LoggerFactory.getLogger(SyncServiceApplication.class);
 	/**
 	 * @param args input parameters passed in when running the application. 
 	 */
