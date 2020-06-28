@@ -10,20 +10,21 @@ import java.util.List;
  */
 public class FormResponse implements Serializable {
 
-	/** * */
 	private static final long serialVersionUID = 9136762341724971453L;
 
-	/** * */
 	private int formId;
-	
-	/** * */
+
 	private String timestamp;
-	
-	/** * */
-	private List<String> questions = new ArrayList<String>();
-	
-	/** * */
-	private List<String> answers = new ArrayList<String>();
+
+	private List<String> questions;
+
+	private List<String> answers;
+
+	public FormResponse() {
+		super();
+		this.questions = new ArrayList<String>();
+		this.answers = new ArrayList<String>();
+	}
 
 	/**
 	 * @return
@@ -89,6 +90,5 @@ public class FormResponse implements Serializable {
 		return "FormResponse [formId=" + formId + ", timestamp=" + timestamp + ", questions=" + questions + ", answers="
 				+ answers + "]";
 	}
-	
-	
+
 }
