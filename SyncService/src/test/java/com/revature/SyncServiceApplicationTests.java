@@ -6,7 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 
 /**
- * @author Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
+ * @authors Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
  *
  */
 @SpringBootTest

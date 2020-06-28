@@ -12,7 +12,7 @@ import reactor.core.scheduler.Schedulers;
 
 /**
  * Controls all endpoints related to Forms.
- * @author Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
+ * @authors Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
  *
  */
 @RestController

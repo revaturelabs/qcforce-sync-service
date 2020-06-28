@@ -14,7 +14,7 @@ import org.apache.logging.log4j.LogManager;
 
 /**
  * QCForce Sync Service Application Main Class
- * @author Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
+ * @authors Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
  */
 @SpringBootApplication
 @EnableJpaRepositories

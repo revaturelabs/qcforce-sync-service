@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import com.revature.service.MessageService;
 
 /**
- * @author Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
+ * @authors Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
  *
  */
 @Component

@@ -13,7 +13,7 @@ import com.rabbitmq.client.AMQP.Exchange;
 
 /**
  * RabbitMQ main configurations used throught the application.
- * @author Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
+ * @authors Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
  */
 @Configuration
 public class RabbitMQConfig {
