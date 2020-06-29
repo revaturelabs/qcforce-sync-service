@@ -8,6 +8,7 @@ import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.revature.AppLogger;
 import com.revature.config.RabbitMQConfig;
 import com.revature.domain.Batch;
 import com.revature.domain.Form;
@@ -86,11 +87,10 @@ public class RabbitMQImpl implements MessageService {
 					formService.updateForm(f);
 					GoogleRetrievalImpl.currentRow+=1;
 				} catch (Exception e) {
-					e.printStackTrace();
-					System.out.println("Insertion Issue check connection or cue configuration");
+					AppLogger.log.error("Insertion Issue check connection or cue configuration");
 				}
 			} else {
-				System.out.println("Exited due to inconsistent sync parameters");
+				AppLogger.log.error("Exited due to inconsistent sync parameters");
 				break;
 			}
 		}

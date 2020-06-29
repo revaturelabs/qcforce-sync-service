@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.ValueRange;
-
+import com.revature.AppLogger;
 import com.revature.config.SheetsServiceConfig;
 
 /**
@@ -78,7 +78,7 @@ public class GoogleRetrievalImpl implements DataRetrievalService{
 
 		} catch (Exception e) {
 			// TODO: Log this exception
-			e.printStackTrace();
+			AppLogger.log.error("Nothing to retrieve.");
 			return new ArrayList<List<Object>>();
 		}
 

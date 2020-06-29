@@ -13,7 +13,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @EnableJpaRepositories
 @EnableScheduling
 public class SyncServiceApplication {
-
 	/**
 	 * @param args input parameters passed in when running the application. 
 	 */
