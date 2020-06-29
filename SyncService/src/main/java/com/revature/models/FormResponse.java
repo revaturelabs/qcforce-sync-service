@@ -108,8 +108,10 @@ public class FormResponse implements Serializable {
 
 	@Override
 	public String toString() {
-		return "FormResponse [formId=" + formId + ", timestamp=" + timestamp + ", questions=" + questions + ", answers="
-				+ answers + "]";
+		return "FormResponse [getFormId()=" + getFormId() + ", getTimestamp()=" + getTimestamp() + ", getQuestions()="
+				+ getQuestions() + ", getAnswers()=" + getAnswers() + "]";
 	}
+
+
 
 }

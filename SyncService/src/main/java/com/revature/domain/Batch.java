@@ -298,14 +298,17 @@ public void setAdditionalProperty(String name, Object value) {
 this.additionalProperties.put(name, value);
 }
 
-
 @Override
 public String toString() {
-	return "Batch [id=" + id + ", batchId=" + batchId + ", name=" + name + ", startDate=" + startDate + ", endDate="
-			+ endDate + ", skill=" + skill + ", location=" + location + ", type=" + type + ", goodGrade=" + goodGrade
-			+ ", passingGrade=" + passingGrade + ", employeeAssignments=" + employeeAssignments
-			+ ", additionalProperties=" + additionalProperties + "]";
+	return "Batch [getId()=" + getId() + ", getBatchId()=" + getBatchId() + ", getName()=" + getName()
+			+ ", getStartDate()=" + getStartDate() + ", getEndDate()=" + getEndDate() + ", getSkill()=" + getSkill()
+			+ ", getLocation()=" + getLocation() + ", getType()=" + getType() + ", getGoodGrade()=" + getGoodGrade()
+			+ ", getPassingGrade()=" + getPassingGrade() + ", getEmployeeAssignments()=" + getEmployeeAssignments()
+			+ ", getAdditionalProperties()=" + getAdditionalProperties() + "]";
 }
+
+
+
 
 
 }

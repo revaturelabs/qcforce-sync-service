@@ -112,8 +112,10 @@ public class Employee {
 
 	@Override
 	public String toString() {
-		return "Employee [email=" + email + ", firstName=" + firstName + ", lastName=" + lastName
-				+ ", additionalProperties=" + additionalProperties + "]";
+		return "Employee [getEmail()=" + getEmail() + ", getFirstName()=" + getFirstName() + ", getLastName()="
+				+ getLastName() + ", getAdditionalProperties()=" + getAdditionalProperties() + "]";
 	}
+
+
 
 }

@@ -113,8 +113,10 @@ public class EmployeeAssignment {
 
 	@Override
 	public String toString() {
-		return "EmployeeAssignment [role=" + role + ", employee=" + employee + ", deletedAt=" + deletedAt
-				+ ", additionalProperties=" + additionalProperties + "]";
+		return "EmployeeAssignment [getRole()=" + getRole() + ", getEmployee()=" + getEmployee() + ", getDeletedAt()="
+				+ getDeletedAt() + ", getAdditionalProperties()=" + getAdditionalProperties() + "]";
 	}
+
+
 
 }
