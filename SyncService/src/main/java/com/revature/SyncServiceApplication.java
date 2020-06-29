@@ -20,12 +20,14 @@ import org.apache.logging.log4j.LogManager;
 @EnableJpaRepositories
 @EnableScheduling
 public class SyncServiceApplication {
-	private static final Logger LOGGER = LogManager.getLogger(SyncServiceApplication.class); //LoggerFactory.getLogger(SyncServiceApplication.class);
+	private static final Logger LOGGER = LogManager.getLogger(SyncServiceApplication.class); 
+										//LoggerFactory.getLogger(SyncServiceApplication.class);
 	/**
 	 * @param args input parameters passed in when running the application. 
 	 */
 	public static void main(String[] args) {
 		SpringApplication.run(SyncServiceApplication.class, args);
+		LOGGER.info("main: Sync Service Booted Up!");
 	}
 
 }
