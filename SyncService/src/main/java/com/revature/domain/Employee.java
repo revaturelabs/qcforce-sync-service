@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 /**
  * This class represents the information for an Employee.
- * @authors Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
+ * @author Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({"email","firstName","lastName"})

@@ -9,12 +9,15 @@ import com.revature.domain.Form;
 import com.revature.repo.FormRepo;
 
 /**
- * @authors Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
- *
+ * Used to keep a count of the form responses sent through the messaging queue.
+ * @author Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
  */
 @Service
 public class FormServiceImpl implements FormService {
 
+	/**
+	 * Instance of a FormRepo
+	 */
 	private FormRepo formRepo;
 	
 	@Autowired

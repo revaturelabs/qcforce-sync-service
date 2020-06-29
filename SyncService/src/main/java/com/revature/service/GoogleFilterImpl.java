@@ -11,12 +11,16 @@ import org.springframework.stereotype.Service;
 import com.revature.models.FormResponse;
 
 /**
- * @authors Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
- *
+ * Filters raw data retrieved from a Google Sheets spreadsheet.
+ * @author Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
  */
 @Service
 public class GoogleFilterImpl implements DataFilterService{
 
+	
+	/**
+	 *	Instance of DataRetrievalService 
+	 */
 	private DataRetrievalService dataRetrievalService;
 	
 	@Autowired
@@ -118,7 +122,6 @@ public class GoogleFilterImpl implements DataFilterService{
 		List<FormResponse> forms = new ArrayList<FormResponse>();
 
 		List<List<String>> filteredData = getFilteredSheetData();
-		System.out.println("Filtered Data:\n" + filteredData);
 		if (filteredData.size() == 0) {
 			return new ArrayList<FormResponse>();
 		}

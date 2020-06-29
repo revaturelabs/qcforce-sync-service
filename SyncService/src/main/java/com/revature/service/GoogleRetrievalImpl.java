@@ -3,81 +3,74 @@ package com.revature.service;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.ValueRange;
 import com.revature.AppLogger;
 import com.revature.config.SheetsServiceConfig;
 
 /**
- * @authors Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
- *
+ * Retrieves raw data from a Google Sheets spreadsheet.
+ * @author Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
  */
 @Service
 public class GoogleRetrievalImpl implements DataRetrievalService{
 	
-	/** * */
+	/**
+	 *	Instance of a sheet service to connect to Google Sheets. 
+	 */
 	private Sheets sheetsService;
 
+	/**
+	 * Instance of Form Service.
+	 */
 	private FormService formService;
 
-	/** * */
+	/**
+	 * The current row in the spreadsheet used to keep track of the response forms that have been sent.
+	 */
 	public static int currentRow;
 
-	/**
-	 * @param sheetsService
-	 */
-	@Autowired
-	public void setSheetsService(Sheets sheetsService) {
-		this.sheetsService = sheetsService;
-	}
 
-	@Autowired
-	public void setFormService(FormService formService) {
-		this.formService = formService;
-	}
-	
-	/*
+	/**
+	 * Initializes Services
+	 * @param sheetsService Sheet Service bean.
+	 * @param formService Form Service bean.
+	 */
 	public GoogleRetrievalImpl(Sheets sheetsService, FormService formService) {
 		super();
 		this.sheetsService = sheetsService;
 		this.formService = formService;
 	}
-	*/
 
 	@Override
 	public List<List<Object>> retrieveRawSheetData() {
-		// TODO: Comment
+		//Sets current spreadsheet. 
 		String spreadsheetId = SheetsServiceConfig.SPREAD_SHEET_ID;
-		// TODO: Comment
-
+		//Gets last row sent.
 		currentRow = formService.getFormById(1).getFormId();
-
 		currentRow += 1;
+		//Creates range for new responses.
 		String range = "A" + (currentRow+1) + ":ZZZ";
-		// TODO: Comment
+		//Creates ranges
 		ValueRange response, questions;
-
-		// TODO: Comment
+		//Populates data into ranges
 		try {
 			questions = sheetsService.spreadsheets().values().get(spreadsheetId, "A1:1").execute();
 			response = sheetsService.spreadsheets().values().get(spreadsheetId, range).execute();
 			if (formService.getFormById(1).getFormId() + 1 != currentRow) {
 				return new ArrayList<List<Object>>();
 			}
-
+			//Gets raw data form ranges
 			List<List<Object>> values = response.getValues();
+			//Returns retrieved data if any.
 			if (values != null) {
 				values.add(0, questions.getValues().get(0));
 				return values;
 			} else {
 				return new ArrayList<List<Object>>();
 			}
-
 		} catch (Exception e) {
-			// TODO: Log this exception
 			AppLogger.log.error("Nothing to retrieve.");
 			return new ArrayList<List<Object>>();
 		}

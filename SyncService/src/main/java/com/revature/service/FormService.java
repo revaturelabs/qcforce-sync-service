@@ -6,36 +6,46 @@ import com.revature.domain.Form;
 
 
 /**
- * @authors Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
- *
+ * Handles CRUD for Forms.
+ * @author Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
  */
 public interface FormService {
 	
 	/**
-	 * @return
+	 * Gets all forms.
+	 * Not Implemented.
+	 * @return list of all forms.
 	 */
 	public List<Form> getAllForms();
 		
 	/**
-	 * @param id
-	 * @return
+	 * Gets a form by an id.
+	 * Not implemented.
+	 * @param id form id.
+	 * @return a {@link Form}.
 	 */
 	public Form getFormById(int id);
 		
 	/**
-	 * @param question
+	 * Creates a new form.
+	 * Not implemented.
+	 * @param form a {@link Form}.
 	 */
-	public void createForm(Form question);
+	public void createForm(Form form);
 		
 	/**
-	 * @param question
+	 * Updates a form.
+	 * Used to keep track of for responses.
+	 * @param form {@link Form}.
 	 */
-	public void updateForm(Form question);
+	public void updateForm(Form form);
 		
 	/**
-	 * @param question
+	 * Deletes a form.
+	 * Not implemented.
+	 * @param form a {@link Form}.
 	 */
-	public void deleteForm(Form question);
+	public void deleteForm(Form form);
 		
 
 }

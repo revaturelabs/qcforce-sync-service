@@ -11,7 +11,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 /**
  * This class represents the information for an Employee.
- * @authors Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
+ * @author Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
  *
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -49,7 +49,7 @@ public class EmployeeAssignment {
 
 	/**
 	 * Sets assignment role.
-	 * @param new role.
+	 * @param role new role.
 	 */
 	@JsonProperty("role")
 	public void setRole(String role) {
@@ -77,7 +77,7 @@ public class EmployeeAssignment {
 
 	/**
 	 * Unimplemented deleteAt variable
-	 * @return
+	 * @return not implemented
 	 */
 	@JsonProperty("deletedAt")
 	public Object getDeletedAt() {
@@ -86,7 +86,7 @@ public class EmployeeAssignment {
 
 	/**
 	 * Unimplemented deleteAt variable
-	 * @param deletedAt
+	 * @param deletedAt not implemented
 	 */
 	@JsonProperty("deletedAt")
 	public void setDeletedAt(Object deletedAt) {

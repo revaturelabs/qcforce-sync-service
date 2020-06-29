@@ -1,22 +1,22 @@
 package com.revature.scheduler;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.revature.controllers.SyncController;
+import com.revature.AppLogger;
 import com.revature.service.MessageService;
 
 /**
- * @authors Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
- *
+ * Schedules a synchronization at a specified interval (default : twenty four hours). 
+ * @author Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
  */
 @Component
 public class Scheduler {
-	private static final Logger LOGGER = LogManager.getLogger(Scheduler.class);
 	
+	/**
+	 * Instance of messaging service
+	 */
 	private MessageService messageService;
 
 	@Autowired
@@ -25,12 +25,13 @@ public class Scheduler {
 	}
 
 	/**
-	 * 
+	 * Triggers a synchronization with the data source.
 	 */
-	@Scheduled(fixedDelay = 86400000, initialDelay = 300000)
+	//@Scheduled(fixedDelay = 86400000, initialDelay = 300000)
+	@Scheduled(fixedDelay = 86400000)
 	public void triggerSync() {
 		messageService.sendData();
-		LOGGER.info("triggerSync: 24 hr scheduled sync initiated.");
+		AppLogger.log.info("triggerSync: 24 hr scheduled sync initiated.");
 	}
 
 }

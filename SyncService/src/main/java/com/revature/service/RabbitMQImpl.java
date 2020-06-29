@@ -5,7 +5,6 @@ import java.util.List;
 import org.mortbay.log.Log;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.MessageConverter;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.revature.AppLogger;
@@ -15,67 +14,57 @@ import com.revature.domain.Form;
 import com.revature.models.FormResponse;
 
 /**
- * @authors Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
- *
+ * Use to send Google Sheets form response data to a RabbitMQ service.
+ * @author Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
  */
 @Service
 public class RabbitMQImpl implements MessageService {
 
-	/** * */
+	
+	/**
+	 * Instance of a Rabbit Template.
+	 */
 	private RabbitTemplate rabbitTemplate;
 
-	/** * */
+	
+	/**
+	 * Instance of a Message Converter.
+	 */
 	private MessageConverter messageConverter;
 
+	/**
+	 * Instance of a Data Filter Service.
+	 */
 	private DataFilterService dataFilterService;
 
+	/**
+	 * Instance of a Form Service.
+	 */
 	private FormService formService;
 
-	/**
-	 * @param rabbitTemplate
-	 */
-	@Autowired
-	public void setRabbitTemplate(RabbitTemplate rabbitTemplate) {
-		this.rabbitTemplate = rabbitTemplate;
-	}
-
-	/**
-	 * @param messageConverter
-	 */
-	@Autowired
-	public void setMessageConverter(MessageConverter messageConverter) {
-		this.messageConverter = messageConverter;
-	}
-
-	@Autowired
-	public void setDataFilterService(DataFilterService dataFilterService) {
-		this.dataFilterService = dataFilterService;
-	}
-
-	@Autowired
-	public void setFormService(FormService formService) {
-		this.formService = formService;
-	}
 	
-	/*
+	/**
+	 * Initializes all services.
+	 * @param rabbitTemplate Rabbit Template bean.
+	 * @param messageConverter Message Converter bean.
+	 * @param dataFilterService Data Filter Service bean.
+	 * @param formService Form Service bean.
+	 */
 	public RabbitMQImpl(RabbitTemplate rabbitTemplate, MessageConverter messageConverter,
 			DataFilterService dataFilterService, FormService formService) {
 		super();
 		this.rabbitTemplate = rabbitTemplate;
 		this.messageConverter = messageConverter;
 		this.dataFilterService = dataFilterService;
+		this.formService = formService;
 	}
-	*/
 
 
 	@Override
 	public void sendData() {
 		rabbitTemplate.setMessageConverter(messageConverter);
 		List<FormResponse> data = dataFilterService.mapFormResponses();
-		System.out.println("Data:\n" + data);
 		for (FormResponse row : data) {
-			System.out.println("Current Row:" + GoogleRetrievalImpl.currentRow);
-			System.out.println("Database Row:" + (formService.getFormById(1).getFormId() + 1));
 			if ((formService.getFormById(1).getFormId() + 1) == GoogleRetrievalImpl.currentRow) {
 				try {
 					rabbitTemplate.convertAndSend(RabbitMQConfig.exchangeFormResponse,
@@ -94,6 +83,7 @@ public class RabbitMQImpl implements MessageService {
 				break;
 			}
 		}
+		AppLogger.log.info("Sent "+data.size()+" forms successfully");
 	}
 
 

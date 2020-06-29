@@ -5,30 +5,34 @@ import java.util.List;
 import com.revature.models.FormResponse;
 
 /**
- * @authors Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
- *
+ * Filters raw data pulled from a data source and maps it to a readable format.
+ * @author Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
  */
 public interface DataFilterService {
 	
 	/**
-	 * @return
+	 * Retrieves raw data from the data source, converts it to a string matrix and eliminates duplicates. 
+	 * @return a matrix of row data.
 	 */
 	public List<List<String>> getFilteredSheetData();
 	
 	/**
-	 * @param data
-	 * @return
+	 * Takes in raw data and converts it to a matrix including duplicate values.
+	 * @param data raw data
+	 * @return a matrix of row data including duplicate columns.
 	 */
 	public List<List<String>> convertRawToStringList(List<List<Object>> data);
 	
 	/**
-	 * @param data
-	 * @return
+	 * Takes in a matrix of data  that needs to be filtered and removes duplicates.
+	 * @param data data including duplicates
+	 * @return a matrix of row data with no duplicates.
 	 */
 	public List<List<String>> filterDup(List<List<String>> data);
 	
 	/**
-	 * @return
+	 * Maps filtered row data to a list of form responses.
+	 * @return a list of form responses. 
 	 */
 	public List<FormResponse> mapFormResponses();
 }

@@ -6,8 +6,8 @@ import com.revature.domain.Form;
 
 
 /**
- * @authors Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
- *
+ * Used to save form count to database.
+ * @author Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
  */
 @Repository
 public interface FormRepo extends JpaRepository<Form,Integer>{

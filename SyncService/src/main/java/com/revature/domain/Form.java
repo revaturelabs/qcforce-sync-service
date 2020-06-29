@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 /**
  * This class represents form data from form submissions.
- * @authors Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
+ * @author Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
  */
 @Entity
 @Table(name= "form")
@@ -28,7 +28,7 @@ public class Form implements Serializable{
 	private static final long serialVersionUID = 3333672074531118712L;
 
 	/**
-	 *	variable of type {@link Integer} that identifies the row in the database that tracks form id's. 
+	 *	variable of type {@link Integer} that represents the internal form id used by the database. 
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,38 +36,37 @@ public class Form implements Serializable{
 	private int id;
 
 	/**
-	 *	variable of type {@link Integer} that represents the id of the last form sent to the Rabbit Message Queue. 
+	 *	variable of type {@link Integer} that represents the id linked to a row in the response spreadsheet. 
 	 */
 	@Column(name = "form_id")
 	private int formId;
 
 	
-	/**
-	 * Gets the id of the database row that tracks a form's id.
-	 * @return database row id.
+	/**Gets internal id.
+	 * @return returns internal id.
 	 */
 	public int getId() {
 		return id;
 	}
 
 	/**
-	 * Sets the id of the database row that tracks a form's id.
-	 * @param id new database row id.
+	 * Sets internal id.
+	 * @param id new id.
 	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
 	/**
-	 * Gets the id of the last form sent to the Rabbit Message Queue.
-	 * @return id of the last form sent to the Rabbit Message Queue.
+	 * Gets form id.
+	 * @return form id
 	 */
 	public int getFormId() {
 		return formId;
 	}
 
 	/**
-	 * Sets the id of the last form sent to the Rabbit Message Queue
+	 * Sets for id
 	 * @param formId new form id
 	 */
 	public void setFormId(int formId) {
@@ -103,6 +102,5 @@ public class Form implements Serializable{
 	public String toString() {
 		return "Form [id=" + id + ", formId=" + formId + "]";
 	}
-
 
 }

@@ -3,11 +3,11 @@ package com.revature.config;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.net.URISyntaxException;
 import java.security.GeneralSecurityException;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.io.FileUtils;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -18,11 +18,10 @@ import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.services.sheets.v4.Sheets;
-import org.apache.commons.io.FileUtils;
 
 /**
  * Main configuration class for connecting to google sheets
- * @authors Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
+ * @author Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
  */
 @Configuration
 public class SheetsServiceConfig {
