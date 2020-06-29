@@ -14,7 +14,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 /**
  * This class represents form data from form submissions.
- * @author Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
+ * @authors Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
  */
 @Entity
 @Table(name= "form")
@@ -28,7 +28,7 @@ public class Form implements Serializable{
 	private static final long serialVersionUID = 3333672074531118712L;
 
 	/**
-	 *	variable of type {@link Integer} that represents the internal form id used by the database. 
+	 *	variable of type {@link Integer} that identifies the row in the database that tracks form id's. 
 	 */
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,35 +36,39 @@ public class Form implements Serializable{
 	private int id;
 
 	/**
-	 *	variable of type {@link Integer} that represents the id linked to a row in the response spreadsheet. 
+	 *	variable of type {@link Integer} that represents the id of the last form sent to the Rabbit Message Queue. 
 	 */
 	@Column(name = "form_id")
 	private int formId;
 
 	
 	/**
-	 * @return
+	 * Gets the id of the database row that tracks a form's id.
+	 * @return database row id.
 	 */
 	public int getId() {
 		return id;
 	}
 
 	/**
-	 * @param id
+	 * Sets the id of the database row that tracks a form's id.
+	 * @param id new database row id.
 	 */
 	public void setId(int id) {
 		this.id = id;
 	}
 
 	/**
-	 * @return
+	 * Gets the id of the last form sent to the Rabbit Message Queue.
+	 * @return id of the last form sent to the Rabbit Message Queue.
 	 */
 	public int getFormId() {
 		return formId;
 	}
 
 	/**
-	 * @param formId
+	 * Sets the id of the last form sent to the Rabbit Message Queue
+	 * @param formId new form id
 	 */
 	public void setFormId(int formId) {
 		this.formId = formId;

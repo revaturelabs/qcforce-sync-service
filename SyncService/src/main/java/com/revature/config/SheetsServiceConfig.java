@@ -22,7 +22,7 @@ import org.apache.commons.io.FileUtils;
 
 /**
  * Main configuration class for connecting to google sheets
- * @author Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
+ * @authors Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
  */
 @Configuration
 public class SheetsServiceConfig {

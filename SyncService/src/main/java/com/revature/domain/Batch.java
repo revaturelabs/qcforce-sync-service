@@ -12,7 +12,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 /**
  * This class represents the information for a batch.
- * @author Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
+ * @authors Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
  */
 @JsonInclude(JsonInclude.Include.NON_NULL)
 @JsonPropertyOrder({"id","batchId","name","startDate","endDate","skill","location","type","goodGrade","passingGrade","employeeAssignments"})

@@ -15,7 +15,7 @@ import com.revature.domain.Form;
 import com.revature.models.FormResponse;
 
 /**
- * @author Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
+ * @authors Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
  *
  */
 @Service
