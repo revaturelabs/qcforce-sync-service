@@ -61,9 +61,12 @@ public class RabbitMQImpl implements MessageService {
 
 
 	@Override
-	public void sendData() {
+	public void sendData() { 
 		rabbitTemplate.setMessageConverter(messageConverter);
 		List<FormResponse> data = dataFilterService.mapFormResponses();
+		System.out.println(formService.getFormById(1).getFormId() + 1);
+		System.out.println(GoogleRetrievalImpl.currentRow);
+		System.out.println(data.size());
 		for (FormResponse row : data) {
 			if ((formService.getFormById(1).getFormId() + 1) == GoogleRetrievalImpl.currentRow) {
 				try {

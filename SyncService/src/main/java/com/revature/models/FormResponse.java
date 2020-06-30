@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.revature.config.SheetsServiceConfig;
+
 /**
  *Standard template of a QC survey form that will be sent through a message queue.
  *@author Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
@@ -24,6 +26,11 @@ public class FormResponse implements Serializable {
 	 * variable of type {@link String} that represents the time the response was submited. 
 	 */
 	private String timestamp;
+
+	/**
+	 * variable of type {@link String} that represents the time the response was submited. 
+	 */
+	private String sourceId;
 
 	/**
 	 * variable of type {@link List}{@link String} that represents the questions of the response. 
@@ -92,26 +99,45 @@ public class FormResponse implements Serializable {
 	}
 
 	/**
-	 * Gets an {@link List}{@link String} of answers to the questions from the form.
-	 * @return {@link List}{@link String} answers.
+	 * Gets an list of answers to the questions from the form.
+	 * @return list of answers.
 	 */
 	public List<String> getAnswers() {
 		return answers;
 	}
 
 	/** Sets the form answers.
-	 * @param answers new {@link List}{@link String} of answers.
+	 * @param answers new list of answers.
 	 */
 	public void setAnswers(List<String> answers) {
 		this.answers = answers;
 	}
 
+	
+	/**
+	 * Gets the form source
+	 * @return form source
+	 */
+	public String getSourceId() {
+		return sourceId;
+	}
+
+	
+	/**
+	 * Sets form Source
+	 * @param formSource new form source
+	 */
+	public void setSourceId(String sourceId) {
+		this.sourceId = sourceId;
+	}
+
 	@Override
 	public String toString() {
 		return "FormResponse [getFormId()=" + getFormId() + ", getTimestamp()=" + getTimestamp() + ", getQuestions()="
-				+ getQuestions() + ", getAnswers()=" + getAnswers() + "]";
+				+ getQuestions() + ", getAnswers()=" + getAnswers() + ", getFormSource()=" + getSourceId() + "]";
 	}
 
+	
 
 
 }
