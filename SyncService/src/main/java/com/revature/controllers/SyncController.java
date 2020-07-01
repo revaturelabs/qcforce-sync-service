@@ -36,7 +36,6 @@ public class SyncController {
 	 */
 	@PostMapping("/sync")
 	public Mono<Void> triggerSyncService() {
-		//TODO: Fix Log
 		AppLogger.log.info("triggerSyncService: triggerSyncService Called");
 		return Mono.fromRunnable(() -> messageService.sendData()).subscribeOn(Schedulers.elastic()).then();
 	}

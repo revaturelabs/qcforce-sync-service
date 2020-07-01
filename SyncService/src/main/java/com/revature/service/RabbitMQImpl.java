@@ -91,6 +91,7 @@ public class RabbitMQImpl implements MessageService {
 			rabbitTemplate.convertAndSend(RabbitMQConfig.exchangeBatchData, RabbitMQConfig.routingKeyBatchData,
 					batchData);
 		}
+		AppLogger.log.info("Sent batch data for " + data.size() + "batches successfully");
 	}
 
 }

@@ -38,11 +38,11 @@ public class GoogleFilterImpl implements DataFilterService{
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<List<String>> convertRawToStringList(List<List<Object>> data) {
-		// TODO: Comment
+		// Create a matrix of strings that will be populated with the converted raw data objects
 		List<List<String>> listOfLists = new ArrayList<List<String>>();
-		/*
-		 * TODO: Comment
-		 */
+		
+		//Inputs the raw data objects of every row into the string matrix.
+		// Objects are casted from type Object to type String.
 		for (@SuppressWarnings("rawtypes")
 		List row : data) {
 			listOfLists.add(row);
@@ -58,18 +58,17 @@ public class GoogleFilterImpl implements DataFilterService{
 			return new ArrayList<List<String>>();
 		}
 
-		//TODO: Comment
+		//The first row in the data matrix is a list of questions
 		List<String> questions = data.get(0);
 
-		// TODO: Comment
+		// Instantiate a list of integers that indicate the duplicate 
+		// questions to remove or the duplicate columns to join.
 		List<Integer> itemsToRemove = new ArrayList<Integer>();
 
 		/*
 		 * Get index of all duplicate columns to be joined.
 		 */
-		// TODO: Comment
 		for (int i = 1; i < questions.size() - 1; i++) {
-			// TODO: Comment
 			if (questions.get(i).toString().equals(questions.get(i - 1).toString())
 					|| questions.get(i).toString().equals(questions.get(i + 1).toString())) {
 
