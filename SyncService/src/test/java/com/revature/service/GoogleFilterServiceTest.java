@@ -125,7 +125,7 @@ class GoogleFilterServiceTest {
 		List<Object> fakeExpectedQuestions = new ArrayList<Object>();
 		for (String a : arrExpectedQuestions) {
 			fakeExpectedQuestions.add(a);
-		}
+		} 
 		fakeExpectedQuestions.remove(0);
 		when(dataRetrievalService.retrieveRawSheetData()).thenReturn(fakeData);
 

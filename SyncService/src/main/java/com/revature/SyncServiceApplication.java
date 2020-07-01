@@ -20,6 +20,6 @@ public class SyncServiceApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SyncServiceApplication.class, args);
 		AppLogger.log.info("main: Sync Service Booted Up!");
-	}
+	} 
 
 }

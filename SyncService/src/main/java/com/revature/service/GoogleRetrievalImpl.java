@@ -62,14 +62,11 @@ public class GoogleRetrievalImpl implements DataRetrievalService{
 				return new ArrayList<List<Object>>();
 			}
 			//Gets raw data form ranges
-			List<List<Object>> values = response.getValues();
+			List<List<Object>> values = response.getValues(); 
 			//Returns retrieved data if any.
-			if (values != null) {
-				values.add(0, questions.getValues().get(0));
-				return values;
-			} else {
-				return new ArrayList<List<Object>>();
-			}
+			values.add(0, questions.getValues().get(0));
+			return values;
+	
 		} catch (Exception e) {
 			AppLogger.log.error("Nothing to retrieve.");
 			return new ArrayList<List<Object>>();

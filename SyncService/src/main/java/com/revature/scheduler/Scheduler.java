@@ -21,13 +21,12 @@ public class Scheduler {
 
 	@Autowired
 	public void setMessageService(MessageService messageService) {
-		this.messageService = messageService;
+		this.messageService = messageService; 
 	}
 
 	/**
 	 * Triggers a synchronization with the data source.
 	 */
-	//@Scheduled(fixedDelay = 86400000, initialDelay = 300000)
 	@Scheduled(fixedDelay = 86400000)
 	public void triggerSync() {
 		messageService.sendData();
