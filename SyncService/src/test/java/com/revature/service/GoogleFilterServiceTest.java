@@ -1,7 +1,7 @@
 package com.revature.service;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
@@ -29,7 +29,7 @@ class GoogleFilterServiceTest {
 	public void testRawToString() {
 		List<List<Object>> data = new ArrayList<List<Object>>();
 		List<List<String>> data2 = new ArrayList<List<String>>();
-		assertEquals("Classes should be equal.",googleFilter.convertRawToStringList(data).getClass(), data2.getClass());
+		assertEquals(googleFilter.convertRawToStringList(data).getClass(), data2.getClass());
 	}
 
 	@Test

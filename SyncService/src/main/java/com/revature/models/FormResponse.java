@@ -4,8 +4,6 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.revature.config.SheetsServiceConfig;
-
 /**
  *Standard template of a QC survey form that will be sent through a message queue.
  *@author Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela

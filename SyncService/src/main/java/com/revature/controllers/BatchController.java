@@ -40,7 +40,6 @@ public class BatchController {
 	 */
 	@PostMapping("/batch")
 	public Mono<Void> uploadJSON(@RequestBody List<Batch> data) {
-		//TODO: Fix Log
 		AppLogger.log.info("uploadJSON: uploadJson Called");
 		return Mono.fromRunnable(() -> messageService.sendBatchData(data)).subscribeOn(Schedulers.elastic()).then();
 	}
