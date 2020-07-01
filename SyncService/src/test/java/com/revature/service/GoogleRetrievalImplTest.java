@@ -4,6 +4,8 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -23,7 +25,7 @@ import com.revature.domain.Form;
 class GoogleRetrievalImplTest {
 
 	/**
-	 *	Instance of a sheet service to connect to Google Sheets. 
+	 * Instance of a sheet service to connect to Google Sheets.
 	 */
 	@Mock
 	Sheets sheetsService;
@@ -33,32 +35,52 @@ class GoogleRetrievalImplTest {
 	 */
 	@Mock
 	FormService formService;
-	
+
 	@InjectMocks
 	GoogleRetrievalImpl retrievalService;
-	
+
 	@Test
 	void testGetRawData() throws IOException {
 		when(sheetsService.spreadsheets()).thenReturn(mock(Spreadsheets.class));
 		when(sheetsService.spreadsheets().values()).thenReturn(mock(Values.class));
-		when(sheetsService.spreadsheets().values().get(Mockito.anyString(), Mockito.anyString())).thenReturn(mock(Get.class));
+		when(sheetsService.spreadsheets().values().get(Mockito.anyString(), Mockito.anyString()))
+				.thenReturn(mock(Get.class));
 		when(sheetsService.spreadsheets().values().get("", "A1:1").execute()).thenReturn(new ValueRange());
-		Form f= new Form();
+		Form f = new Form();
 		f.setFormId(-1);
-		Form f2= new Form();
+		Form f2 = new Form();
 		f.setFormId(5);
-		when(formService.getFormById(1)).thenReturn(f,f2);
+		when(formService.getFormById(1)).thenReturn(f, f2);
 		retrievalService.retrieveRawSheetData();
 	}
-	
+
 	@Test
 	void testGetRawDataResultsNull() throws IOException {
 		when(sheetsService.spreadsheets()).thenReturn(mock(Spreadsheets.class));
 		when(sheetsService.spreadsheets().values()).thenReturn(mock(Values.class));
-		when(sheetsService.spreadsheets().values().get(Mockito.anyString(), Mockito.anyString())).thenReturn(mock(Get.class));
+		when(sheetsService.spreadsheets().values().get(Mockito.anyString(), Mockito.anyString()))
+				.thenReturn(mock(Get.class));
 		when(sheetsService.spreadsheets().values().get("", "A1:1").execute()).thenReturn(null);
-		Form f= new Form();
+		Form f = new Form();
 		f.setFormId(-1);
+		when(formService.getFormById(1)).thenReturn(f);
+		retrievalService.retrieveRawSheetData();
+	}
+
+	@Test
+	void testGetRawDataPass() throws IOException {
+		when(sheetsService.spreadsheets()).thenReturn(mock(Spreadsheets.class));
+		when(sheetsService.spreadsheets().values()).thenReturn(mock(Values.class));
+		when(sheetsService.spreadsheets().values().get(Mockito.anyString(), Mockito.anyString()))
+				.thenReturn(mock(Get.class));
+		List<List<Object>> obj = new ArrayList<List<Object>>();
+		obj.add(new ArrayList<Object>());
+		ValueRange v = new ValueRange();
+		v.setValues(obj);
+		when(sheetsService.spreadsheets().values().get("", "A1:1").execute()).thenReturn(v);
+		Form f = new Form();
+		f.setFormId(-1);
+
 		when(formService.getFormById(1)).thenReturn(f);
 		retrievalService.retrieveRawSheetData();
 	}
