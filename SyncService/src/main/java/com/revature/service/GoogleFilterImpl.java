@@ -13,22 +13,21 @@ import com.revature.models.FormResponse;
 
 /**
  * Filters raw data retrieved from a Google Sheets spreadsheet.
+ * 
  * @author Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
  */
 @Service
-public class GoogleFilterImpl implements DataFilterService{
+public class GoogleFilterImpl implements DataFilterService {
 
-	
 	/**
-	 *	Instance of DataRetrievalService 
+	 * Instance of DataRetrievalService
 	 */
 	private DataRetrievalService dataRetrievalService;
-	
+
 	@Autowired
 	public void setDataRetrievalService(DataRetrievalService dataRetrievalService) {
 		this.dataRetrievalService = dataRetrievalService;
 	}
-
 
 	@Override
 	public List<List<String>> getFilteredSheetData() {
@@ -38,10 +37,11 @@ public class GoogleFilterImpl implements DataFilterService{
 	@Override
 	@SuppressWarnings("unchecked")
 	public List<List<String>> convertRawToStringList(List<List<Object>> data) {
-		// Create a matrix of strings that will be populated with the converted raw data objects
+		// Create a matrix of strings that will be populated with the converted raw data
+		// objects
 		List<List<String>> listOfLists = new ArrayList<List<String>>();
-		
-		//Inputs the raw data objects of every row into the string matrix.
+
+		// Inputs the raw data objects of every row into the string matrix.
 		// Objects are casted from type Object to type String.
 		for (@SuppressWarnings("rawtypes")
 		List row : data) {
@@ -54,14 +54,14 @@ public class GoogleFilterImpl implements DataFilterService{
 	@SuppressWarnings("unchecked")
 	public List<List<String>> filterDup(List<List<String>> data) {
 
-		if(data.size()==0){
+		if (data.size() == 0) {
 			return new ArrayList<List<String>>();
 		}
 
-		//The first row in the data matrix is a list of questions
+		// The first row in the data matrix is a list of questions
 		List<String> questions = data.get(0);
 
-		// Instantiate a list of integers that indicate the duplicate 
+		// Instantiate a list of integers that indicate the duplicate
 		// questions to remove or the duplicate columns to join.
 		List<Integer> itemsToRemove = new ArrayList<Integer>();
 
@@ -128,11 +128,11 @@ public class GoogleFilterImpl implements DataFilterService{
 		List<String> questions = filteredData.get(0);
 		questions.remove(0);
 
-		//Cycling through filtered data, create a new form response & add it to the returned array
-		for(int i = 1 ;i < filteredData.size(); i++)
-		{
-			FormResponse temp =new FormResponse();
-			temp.setFormId(i);
+		// Cycling through filtered data, create a new form response & add it to the
+		// returned array
+		for (int i = 1; i < filteredData.size(); i++) {
+			FormResponse temp = new FormResponse();
+			temp.setFormId(GoogleRetrievalImpl.currentRow + i - 1);
 			temp.setSourceId(SheetsServiceConfig.SPREAD_SHEET_ID);
 			temp.setTimestamp(filteredData.get(i).get(0));
 			List<String> answers = filteredData.get(i);
