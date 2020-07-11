@@ -31,4 +31,4 @@ build/
 .vscode/
 
 ### PRIVATE INFO###
-*.yml
+*.p12
