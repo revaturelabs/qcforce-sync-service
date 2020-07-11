@@ -24,14 +24,24 @@ public class GoogleFilterImpl implements DataFilterService {
 	 */
 	private DataRetrievalService dataRetrievalService;
 
-	@Autowired
-	public void setDataRetrievalService(DataRetrievalService dataRetrievalService) {
+	/**
+	 * Instance of SheetsServiceConfig
+	 */
+	private SheetsServiceConfig sheetsServiceConfig;
+
+
+	/**
+	 * @param dataRetrievalService DataRetrievalService bean
+	 * @param sheetsServiceConfig SheetsServiceConfig bean
+	 */
+	public GoogleFilterImpl(DataRetrievalService dataRetrievalService, SheetsServiceConfig sheetsServiceConfig) {
 		this.dataRetrievalService = dataRetrievalService;
+		this.sheetsServiceConfig = sheetsServiceConfig;
 	}
 
 	@Override
 	public List<List<String>> getFilteredSheetData() {
-		return filterDup(convertRawToStringList(dataRetrievalService.retrieveRawSheetData()));
+		return filterAndMergeDup(convertRawToStringList(dataRetrievalService.retrieveRawSheetData()));
 	}
 
 	@Override
@@ -52,7 +62,7 @@ public class GoogleFilterImpl implements DataFilterService {
 
 	@Override
 	@SuppressWarnings("unchecked")
-	public List<List<String>> filterDup(List<List<String>> data) {
+	public List<List<String>> filterAndMergeDup(List<List<String>> data) {
 
 		if (data.size() == 0) {
 			return new ArrayList<List<String>>();
@@ -133,7 +143,7 @@ public class GoogleFilterImpl implements DataFilterService {
 		for (int i = 1; i < filteredData.size(); i++) {
 			FormResponse temp = new FormResponse();
 			temp.setFormId(GoogleRetrievalImpl.currentRow + i - 1);
-			temp.setSourceId(SheetsServiceConfig.SPREAD_SHEET_ID);
+			temp.setSourceId(sheetsServiceConfig.getSPREAD_SHEET_ID());
 			temp.setTimestamp(filteredData.get(i).get(0));
 			List<String> answers = filteredData.get(i);
 			answers.remove(0);

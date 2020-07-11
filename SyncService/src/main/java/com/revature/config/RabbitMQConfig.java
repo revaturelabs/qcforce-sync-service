@@ -6,13 +6,14 @@ import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.amqp.support.converter.MessageConverter;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
 import com.rabbitmq.client.AMQP.Exchange;
 
 /**
- * RabbitMQ main configurations used throught the application.
+ * RabbitMQ main configurations used throughout the application.
  * @author Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
  */
 @Configuration
@@ -21,27 +22,50 @@ public class RabbitMQConfig {
 	/**
 	 * This {@link String} represents the name of the queue for form messages. 
 	 */
-	public final static String queueFormResponse = "FormResponse-Queue";
+	private final String formResponseQueue;
 	/**
 	 * This {@link String} represents the name of the queue for batch messages. 
 	 */
-	public final static String batchFormResponse = "BatchData-Queue";
+	private final String batchDataQueue;
 	/**
 	 * This {@link String} represents the key needed to access the form queue. 
 	 */
-	public final static String routingKeyFormResponse = "FormResponse-Queue-Key";
+	private final String formResponseRoutingKey ;
 	/**
 	 * This {@link String} represents the key needed to access the batch queue. 
 	 */
-	public final static String routingKeyBatchData = "BatchData-Key";
+	private final String batchDataRoutingKey;
 	/**
 	 * This {@link String} represents the name of the exchange for forms. 
 	 */
-	public final static String exchangeFormResponse = "FormResponse-Exchange";
+	private final String formResponseExchange;
 	/**
 	 * This {@link String} represents the name of the exchange for batches. 
 	 */
-	public final static String exchangeBatchData = "BatchData-Exchange";
+	private final String batchDataExchange;
+
+	/**
+	 * @param formResponseQueue represents the name of the queue for form messages.
+	 * @param batchDataQueue represents the name of the queue for batch messages.
+	 * @param formResponseRoutingKey represents the key needed to access the form queue.
+	 * @param batchDataRoutingKey represents the key needed to access the batch queue.
+	 * @param formResponseExchange represents the name of the exchange for forms.
+	 * @param batchDataExchange represents the name of the exchange for batches.
+	 */
+	public RabbitMQConfig(@Value("${sync-service.rabbitMQ-config.formResponseQueue}") String formResponseQueue,
+						  @Value("${sync-service.rabbitMQ-config.batchDataQueue}") String batchDataQueue,
+						  @Value("${sync-service.rabbitMQ-config.formResponseRoutingKey}") String formResponseRoutingKey,
+						  @Value("${sync-service.rabbitMQ-config.batchDataRoutingKey}") String batchDataRoutingKey,
+						  @Value("${sync-service.rabbitMQ-config.formResponseExchange}") String formResponseExchange,
+						  @Value("${sync-service.rabbitMQ-config.batchDataExchange}") String batchDataExchange) {
+		this.formResponseQueue = formResponseQueue;
+		this.batchDataQueue = batchDataQueue;
+		this.formResponseRoutingKey = formResponseRoutingKey;
+		this.batchDataRoutingKey = batchDataRoutingKey;
+		this.formResponseExchange = formResponseExchange;
+		this.batchDataExchange = batchDataExchange;
+	}
+
 
 	/**
 	 * Creates a {@link Queue} form Forms.
@@ -49,7 +73,7 @@ public class RabbitMQConfig {
 	 */
 	@Bean
 	public Queue queueForms() {
-		return new Queue(queueFormResponse, true);
+		return new Queue(formResponseQueue, true);
 	}
 
 	/**
@@ -58,7 +82,7 @@ public class RabbitMQConfig {
 	 */
 	@Bean
 	public Queue queueBatches() {
-		return new Queue(batchFormResponse, true);
+		return new Queue(batchDataQueue, true);
 	}
 
 	/**
@@ -67,7 +91,7 @@ public class RabbitMQConfig {
 	 */
 	@Bean
 	public DirectExchange exchangeForms() {
-		return new DirectExchange(exchangeFormResponse);
+		return new DirectExchange(formResponseExchange);
 	}
 
 	/**
@@ -76,7 +100,7 @@ public class RabbitMQConfig {
 	 */
 	@Bean
 	public DirectExchange exchangeBatches() {
-		return new DirectExchange(exchangeBatchData);
+		return new DirectExchange(batchDataExchange);
 	}
 
 	/**
@@ -87,7 +111,7 @@ public class RabbitMQConfig {
 	 */
 	@Bean
 	public Binding bindingForms(Queue queueForms, DirectExchange exchangeForms) {
-		return BindingBuilder.bind(queueForms).to(exchangeForms).with(routingKeyFormResponse);
+		return BindingBuilder.bind(queueForms).to(exchangeForms).with(formResponseRoutingKey);
 	}
 
 	/**
@@ -98,7 +122,7 @@ public class RabbitMQConfig {
 	 */
 	@Bean
 	public Binding bindingBatches(Queue queueBatches, DirectExchange exchangeBatches) {
-		return BindingBuilder.bind(queueBatches).to(exchangeBatches).with(routingKeyBatchData);
+		return BindingBuilder.bind(queueBatches).to(exchangeBatches).with(batchDataRoutingKey);
 	}
 
 	/**
@@ -110,4 +134,46 @@ public class RabbitMQConfig {
 		return new Jackson2JsonMessageConverter();
 	}
 
+
+	/** Gets the form response queue name
+	 * @return form response queue name
+	 */
+	public String getFormResponseQueue() {
+		return formResponseQueue;
+	}
+
+	/** Gets the batch data queue name
+	 * @return batch data queue name
+	 */
+	public String getBatchDataQueue() {
+		return batchDataQueue;
+	}
+
+	/** Gets the form response routing key
+	 * @return form response routing key
+	 */
+	public String getFormResponseRoutingKey() {
+		return formResponseRoutingKey;
+	}
+
+	/** Gets the batch data routing key
+	 * @return batch data routing key
+	 */
+	public String getBatchDataRoutingKey() {
+		return batchDataRoutingKey;
+	}
+
+	/** Gets the form response exchange name
+	 * @return form response exchange name
+	 */
+	public String getFormResponseExchange() {
+		return formResponseExchange;
+	}
+
+	/** Gets the batch data exchange name
+	 * @return batch data exchange name
+	 */
+	public String getBatchDataExchange() {
+		return batchDataExchange;
+	}
 }

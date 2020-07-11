@@ -11,7 +11,7 @@ import com.revature.models.FormResponse;
 public interface DataFilterService {
 	
 	/**
-	 * Retrieves raw data from the data source, converts it to a string matrix and eliminates duplicates. 
+	 * Retrieves raw data from the data source, converts it to a string matrix and merge duplicates.
 	 * @return a matrix of row data.
 	 */
 	public List<List<String>> getFilteredSheetData();
@@ -24,11 +24,11 @@ public interface DataFilterService {
 	public List<List<String>> convertRawToStringList(List<List<Object>> data);
 	
 	/**
-	 * Takes in a matrix of data  that needs to be filtered and removes duplicates.
+	 * Takes in a matrix of data that needs to be filtered, Merges duplicate columns into one
 	 * @param data data including duplicates
-	 * @return a matrix of row data with no duplicates.
+	 * @return a matrix of row data with merged duplicate columns.
 	 */
-	public List<List<String>> filterDup(List<List<String>> data);
+	public List<List<String>> filterAndMergeDup(List<List<String>> data);
 	
 	/**
 	 * Maps filtered row data to a list of form responses.

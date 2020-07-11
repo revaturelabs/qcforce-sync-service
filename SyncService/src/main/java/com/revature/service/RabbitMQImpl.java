@@ -41,20 +41,26 @@ public class RabbitMQImpl implements MessageService {
 	private FormService formService;
 
 	/**
+	 * Instance of a RabbitMCConfig
+	 */
+	private RabbitMQConfig rabbitMQConfig;
+
+	/**
 	 * Initializes all services.
-	 * 
-	 * @param rabbitTemplate    Rabbit Template bean.
+	 *  @param rabbitTemplate    Rabbit Template bean.
 	 * @param messageConverter  Message Converter bean.
 	 * @param dataFilterService Data Filter Service bean.
 	 * @param formService       Form Service bean.
+	 * @param rabbitMQConfig    RabbitMQConfig bean
 	 */
 	public RabbitMQImpl(RabbitTemplate rabbitTemplate, MessageConverter messageConverter,
-			DataFilterService dataFilterService, FormService formService) {
+						DataFilterService dataFilterService, FormService formService, RabbitMQConfig rabbitMQConfig) {
 		super();
 		this.rabbitTemplate = rabbitTemplate;
 		this.messageConverter = messageConverter;
 		this.dataFilterService = dataFilterService;
 		this.formService = formService;
+		this.rabbitMQConfig = rabbitMQConfig;
 	}
 
 	@Override
@@ -65,8 +71,8 @@ public class RabbitMQImpl implements MessageService {
 			for (FormResponse row : data) {
 				if ((formService.getFormById(1).getFormId() + 1) == GoogleRetrievalImpl.currentRow) {
 
-					rabbitTemplate.convertAndSend(RabbitMQConfig.exchangeFormResponse,
-							RabbitMQConfig.routingKeyFormResponse, row);
+					rabbitTemplate.convertAndSend(rabbitMQConfig.getFormResponseExchange(),
+							rabbitMQConfig.getFormResponseRoutingKey(), row);
 					// Updates
 					Form f = new Form();
 					f.setId(1);
@@ -88,7 +94,7 @@ public class RabbitMQImpl implements MessageService {
 	public void sendBatchData(List<Batch> data) {
 		rabbitTemplate.setMessageConverter(messageConverter);
 		for (Batch batchData : data) {
-			rabbitTemplate.convertAndSend(RabbitMQConfig.exchangeBatchData, RabbitMQConfig.routingKeyBatchData,
+			rabbitTemplate.convertAndSend(rabbitMQConfig.getBatchDataExchange(), rabbitMQConfig.getFormResponseRoutingKey(),
 					batchData);
 		}
 		AppLogger.log.info("Sent batch data for " + data.size() + "batches successfully");

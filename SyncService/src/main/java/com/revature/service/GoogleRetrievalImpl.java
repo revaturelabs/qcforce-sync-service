@@ -27,6 +27,11 @@ public class GoogleRetrievalImpl implements DataRetrievalService{
 	private FormService formService;
 
 	/**
+	 * Instance of SheetsServiceConfig
+	 */
+	private SheetsServiceConfig sheetsServiceConfig;
+
+	/**
 	 * The current row in the spreadsheet used to keep track of the response forms that have been sent.
 	 */
 	public static int currentRow;
@@ -36,17 +41,21 @@ public class GoogleRetrievalImpl implements DataRetrievalService{
 	 * Initializes Services
 	 * @param sheetsService Sheet Service bean.
 	 * @param formService Form Service bean.
+	 * @param sheetsServiceConfig SheetsServiceConfig bean
 	 */
-	public GoogleRetrievalImpl(Sheets sheetsService, FormService formService) {
+	public GoogleRetrievalImpl(Sheets sheetsService,
+							   FormService formService,
+							   SheetsServiceConfig sheetsServiceConfig) {
 		super();
 		this.sheetsService = sheetsService;
 		this.formService = formService;
+		this.sheetsServiceConfig = sheetsServiceConfig;
 	}
 
 	@Override
 	public List<List<Object>> retrieveRawSheetData() {
 		//Sets current spreadsheet. 
-		String spreadsheetId = SheetsServiceConfig.SPREAD_SHEET_ID;
+		String spreadsheetId = sheetsServiceConfig.getSPREAD_SHEET_ID();
 		//Gets last row sent.
 		currentRow = formService.getFormById(1).getFormId();
 		currentRow += 1;

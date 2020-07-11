@@ -10,6 +10,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
  * 
  * @author Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
  */
+
 @SpringBootApplication
 @EnableJpaRepositories
 @EnableScheduling

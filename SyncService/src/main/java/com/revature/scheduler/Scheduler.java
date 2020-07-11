@@ -1,6 +1,7 @@
 package com.revature.scheduler;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
@@ -19,18 +20,27 @@ public class Scheduler {
 	 */
 	private MessageService messageService;
 
-	@Autowired
-	public void setMessageService(MessageService messageService) {
-		this.messageService = messageService; 
+	/**
+	 * The fixed delay of each sync
+	 */
+	private final String fixedDelay;
+
+	/**
+	 * @param messageService MessageService bean
+	 */
+	public Scheduler(MessageService messageService,
+					 @Value("${sync-service.scheduler.fixedDelay:86400000}") String fixedDelay) {
+		this.messageService = messageService;
+		this.fixedDelay = fixedDelay;
 	}
 
 	/**
-	 * Triggers a synchronization with the data source.
+	 * Triggers a synchronization with the data source. Default: 86400000 milliseconds
 	 */
-	@Scheduled(fixedDelay = 86400000)
+	@Scheduled(fixedDelayString = "${sync-service.scheduler.fixedDelay:86400000}")
 	public void triggerSync() {
 		messageService.sendData();
-		AppLogger.log.info("triggerSync: 24 hr scheduled sync initiated.");
+		AppLogger.log.info("triggerSync: scheduled sync with rate of: " + fixedDelay + " milliseconds");
 	}
 
 }

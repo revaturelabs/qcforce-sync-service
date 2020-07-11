@@ -93,10 +93,10 @@ class GoogleFilterServiceTest {
 			fakeExpectedQuestions.add(a);
 		}
 
-		List<List<String>> results = googleFilter.filterDup(fakeData);
+		List<List<String>> results = googleFilter.filterAndMergeDup(fakeData);
 		assertTrue(results.get(0).equals(fakeExpectedQuestions));
 		assertEquals(results.get(0).size(), results.get(1).size());
-		assertEquals(googleFilter.filterDup(new ArrayList<List<String>>()).size(), 0);
+		assertEquals(googleFilter.filterAndMergeDup(new ArrayList<List<String>>()).size(), 0);
 	}
 
 	@Test
