@@ -28,7 +28,7 @@ public class Scheduler {
 	 * @param messageService MessageService bean
 	 */
 	public Scheduler(MessageService messageService,
-					 @Value("${sync-service.scheduler.fixedDelay:86400000}") String fixedDelay) {
+					 @Value("${sync-service.scheduler.fixedDelay}") String fixedDelay) {
 		this.messageService = messageService;
 		this.fixedDelay = fixedDelay;
 	}
