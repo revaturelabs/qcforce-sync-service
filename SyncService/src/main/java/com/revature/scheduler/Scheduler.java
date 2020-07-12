@@ -36,7 +36,7 @@ public class Scheduler {
 	/**
 	 * Triggers a synchronization with the data source. Default: 86400000 milliseconds
 	 */
-	@Scheduled(fixedDelayString = "${sync-service.scheduler.fixedDelay:86400000}")
+	@Scheduled(fixedDelayString = "${sync-service.scheduler.fixedDelay}")
 	public void triggerSync() {
 		messageService.sendData();
 		AppLogger.log.info("triggerSync: scheduled sync with rate of: " + fixedDelay + " milliseconds");
