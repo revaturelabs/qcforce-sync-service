@@ -4,7 +4,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.revature.AppLogger;
+import com.revature.logger.AppLogger;
 import com.revature.service.MessageService;
 
 import reactor.core.publisher.Mono;

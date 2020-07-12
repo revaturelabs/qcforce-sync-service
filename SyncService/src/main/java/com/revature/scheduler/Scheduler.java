@@ -1,11 +1,10 @@
 package com.revature.scheduler;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
-import com.revature.AppLogger;
+import com.revature.logger.AppLogger;
 import com.revature.service.MessageService;
 
 /**

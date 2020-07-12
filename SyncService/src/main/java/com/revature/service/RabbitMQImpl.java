@@ -6,7 +6,7 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.stereotype.Service;
 
-import com.revature.AppLogger;
+import com.revature.logger.AppLogger;
 import com.revature.config.RabbitMQConfig;
 import com.revature.domain.Batch;
 import com.revature.domain.Form;

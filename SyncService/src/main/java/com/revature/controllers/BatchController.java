@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.revature.AppLogger;
+import com.revature.logger.AppLogger;
 import com.revature.domain.Batch;
 import com.revature.service.MessageService;
 

@@ -1,5 +1,6 @@
 package com.revature;
 
+import com.revature.logger.AppLogger;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;

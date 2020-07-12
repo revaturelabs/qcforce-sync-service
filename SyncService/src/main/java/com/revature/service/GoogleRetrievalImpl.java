@@ -6,7 +6,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import com.google.api.services.sheets.v4.Sheets;
 import com.google.api.services.sheets.v4.model.ValueRange;
-import com.revature.AppLogger;
+import com.revature.logger.AppLogger;
 import com.revature.config.SheetsServiceConfig;
 
 /**
