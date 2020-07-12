@@ -10,7 +10,7 @@ spring:
 
   rabbitmq:
     host: ${rabbitmq_host}
-    port: ${rabbitmq_port}
+    port: ${rabbitmq_port:5672}
     username: ${rabbitmq_username}
     password: ${rabbitmq_password}
 
@@ -49,9 +49,9 @@ sync-service:
 
   sheets-service-config:
     clientID: ${sheets_service_clientID}
-    scopes: ${sheets_service_scopes}
+    scopes: ${sheets_service_scopes:https://spreadsheets.google.com/feeds}
     credentialsFilePrefix: ${sheets_service_credentialsFilePrefix}
-    credentialsFileSuffix: ${sheets_service_credentialsFileSuffix:".p12"}
+    credentialsFileSuffix: ${sheets_service_credentialsFileSuffix:.p12}
     spreadSheetID: ${sheets_service_spreadSheetID}
 
   scheduler:
