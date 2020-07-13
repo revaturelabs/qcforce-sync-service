@@ -39,10 +39,6 @@ public class GoogleFilterImpl implements DataFilterService {
 		this.sheetsServiceConfig = sheetsServiceConfig;
 	}
 
-	@Override
-	public List<List<String>> getFilteredSheetData() {
-		return filterAndMergeDup(convertRawToStringList(dataRetrievalService.retrieveRawSheetData()));
-	}
 
 	@Override
 	@SuppressWarnings("unchecked")
@@ -64,7 +60,7 @@ public class GoogleFilterImpl implements DataFilterService {
 	@SuppressWarnings("unchecked")
 	public List<List<String>> filterAndMergeDup(List<List<String>> data) {
 
-		if (data.size() == 0) {
+		if (data.isEmpty()) {
 			return new ArrayList<List<String>>();
 		}
 
@@ -73,14 +69,14 @@ public class GoogleFilterImpl implements DataFilterService {
 
 		// Instantiate a list of integers that indicate the duplicate
 		// questions to remove or the duplicate columns to join.
-		List<Integer> itemsToRemove = new ArrayList<Integer>();
+		List<Integer> itemsToRemove = new ArrayList<>();
 
 		/*
 		 * Get index of all duplicate columns to be joined.
 		 */
 		for (int i = 1; i < questions.size() - 1; i++) {
-			if (questions.get(i).toString().equals(questions.get(i - 1).toString())
-					|| questions.get(i).toString().equals(questions.get(i + 1).toString())) {
+			if (questions.get(i).equals(questions.get(i - 1))
+					|| questions.get(i).equals(questions.get(i + 1))) {
 
 				itemsToRemove.add(i);
 			}
@@ -89,7 +85,7 @@ public class GoogleFilterImpl implements DataFilterService {
 		/*
 		 * Remove duplicate questions
 		 */
-		Set<String> set = new LinkedHashSet<String>();
+		Set<String> set = new LinkedHashSet<>();
 		set.addAll(questions);
 		questions.clear();
 		questions.addAll(set);
@@ -129,11 +125,11 @@ public class GoogleFilterImpl implements DataFilterService {
 	@Override
 	public List<FormResponse> mapFormResponses() {
 
-		List<FormResponse> forms = new ArrayList<FormResponse>();
+		List<FormResponse> forms = new ArrayList<>();
 
-		List<List<String>> filteredData = getFilteredSheetData();
-		if (filteredData.size() == 0) {
-			return new ArrayList<FormResponse>();
+		List<List<String>> filteredData = filterAndMergeDup(convertRawToStringList(dataRetrievalService.retrieveRawSheetData()));
+		if (filteredData.isEmpty()) {
+			return new ArrayList<>();
 		}
 		List<String> questions = filteredData.get(0);
 		questions.remove(0);

@@ -9,12 +9,7 @@ import com.revature.models.FormResponse;
  * @author Wei Wu, Andres Mateo Toledo Albarracin, Jose Canela
  */
 public interface DataFilterService {
-	
-	/**
-	 * Retrieves raw data from the data source, converts it to a string matrix and merge duplicates.
-	 * @return a matrix of row data.
-	 */
-	public List<List<String>> getFilteredSheetData();
+
 	
 	/**
 	 * Takes in raw data and converts it to a matrix including duplicate values.

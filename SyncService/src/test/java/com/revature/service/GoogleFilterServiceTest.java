@@ -32,39 +32,6 @@ class GoogleFilterServiceTest {
 		assertEquals(googleFilter.convertRawToStringList(data).getClass(), data2.getClass());
 	}
 
-	@Test
-	void testGetFilteredSheetData() {
-		List<List<Object>> fakeData = new ArrayList<List<Object>>();
-		List<Object> fakeRowDataQuestions = new ArrayList<Object>();
-		List<Object> fakeRowDataAnswers = new ArrayList<Object>();
-
-		String fakeQuestions = "Timestamp--Name (Optional)--Email (Optional)--What was your most recently completed week of training? (Extended batches start with Week A, normal batches start with Week 1)--How satisfied were you with the Training?--Any overall feedback (Training / Trainer / QC)--Any specific training issues you would like to mention?--Where is your training location?--What batch are you in?--What batch are you in?--What batch are you in?--What batch are you in?--What batch are you in?--How clear were the projects requirements/expectations?--How well has training prepared you to work on this project?--Project feedback:--What is your background coming into the program?--How much programming experience did you have before coming to training?--Please rate your level of understanding of last week's topics:--Batch Name--Please rate the pace of training for last week--Please give your ratings for the list given below : [Materials and content provided were helpful]--Please give your ratings for the list given below : [Training activities were well organized]--Please give your ratings for the list given below : [Questions were encouraged and answered]--Please give your ratings for the list given below : [Training and Projects met my expectations]--Did you go through the SPARK online program on RevaturePro before coming here?--Were your one-on-one and online assessment conducted last week of training?";
-		String fakeAnswers = "3/10/2020 9:36:02--Not a real name--notareal@email.com--Week A--4--This is a comment.--USF--2003 Mar02 AP-USF Java--Non-STEM major--3--3--Agree--Disagree--Agree--Agree--No--Yes";
-		String[] arrfakeQuestions = fakeQuestions.split("--");
-		String[] arrfakeAnswers = fakeAnswers.split("--");
-
-		for (String a : arrfakeQuestions) {
-			fakeRowDataQuestions.add(a);
-		}
-		fakeData.add(fakeRowDataQuestions);
-		for (String a : arrfakeAnswers) {
-			fakeRowDataAnswers.add(a);
-		}
-		fakeData.add(fakeRowDataAnswers);
-
-		String expectedQuestions = "Timestamp--Name (Optional)--Email (Optional)--What was your most recently completed week of training? (Extended batches start with Week A, normal batches start with Week 1)--How satisfied were you with the Training?--Any overall feedback (Training / Trainer / QC)--Any specific training issues you would like to mention?--Where is your training location?--What batch are you in?--How clear were the projects requirements/expectations?--How well has training prepared you to work on this project?--Project feedback:--What is your background coming into the program?--How much programming experience did you have before coming to training?--Please rate your level of understanding of last week's topics:--Batch Name--Please rate the pace of training for last week--Please give your ratings for the list given below : [Materials and content provided were helpful]--Please give your ratings for the list given below : [Training activities were well organized]--Please give your ratings for the list given below : [Questions were encouraged and answered]--Please give your ratings for the list given below : [Training and Projects met my expectations]--Did you go through the SPARK online program on RevaturePro before coming here?--Were your one-on-one and online assessment conducted last week of training?";
-		String[] arrExpectedQuestions = expectedQuestions.split("--");
-		List<Object> fakeExpectedQuestions = new ArrayList<Object>();
-		for (String a : arrExpectedQuestions) {
-			fakeExpectedQuestions.add(a);
-		}
-
-		when(dataRetrievalService.retrieveRawSheetData()).thenReturn(fakeData);
-
-		List<List<String>> results = googleFilter.getFilteredSheetData();
-		assertTrue(results.get(0).equals(fakeExpectedQuestions));
-		assertEquals(results.get(0).size(), results.get(1).size());
-	}
 
 	@Test
 	void testFilterDup() {
@@ -129,12 +96,10 @@ class GoogleFilterServiceTest {
 		fakeExpectedQuestions.remove(0);
 		when(dataRetrievalService.retrieveRawSheetData()).thenReturn(fakeData);
 
-		List<List<String>> resultsFilterDup = googleFilter.getFilteredSheetData();
-		resultsFilterDup.get(1).remove(0);
+
 		List<FormResponse> results = googleFilter.mapFormResponses();
 
 		assertTrue(results.get(0).getQuestions().equals(fakeExpectedQuestions));
-		assertTrue(results.get(0).getAnswers().equals(resultsFilterDup.get(1)));
 		assertEquals(results.get(0).getQuestions().size(), results.get(0).getAnswers().size());
 	}
 	
