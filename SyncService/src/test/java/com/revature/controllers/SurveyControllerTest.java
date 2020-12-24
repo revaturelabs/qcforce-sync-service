@@ -74,6 +74,8 @@ class SurveyControllerTest {
 		List<SurveyQuestion> surveyQuestionList = new ArrayList<>();
 
 		surveyQuestion = new SurveyQuestion(1, LocalDateTime.now(), QuestionType.SHORT_ANSWER, 1, questions);
+		
+		surveyQuestionList.add(surveyQuestion);
 
 		Survey survey = new Survey(1, 8, "Kubernetes", 30, LocalDateTime.now(), surveyQuestionList);
 
