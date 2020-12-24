@@ -1,31 +1,36 @@
 package com.revature.service;
 
 import com.revature.models.Survey;
+import com.revature.repo.SurveyRepo;
 
 public class SurveyServiceImpl implements SurveyService {
 
+	SurveyRepo surveyRepo;
+	
 	@Override
 	public Survey getSurvey(int id) {
 		// TODO Auto-generated method stub
-		return null;
+		return surveyRepo.getSurvey(id);
+		
 	}
 
 	@Override
-	public Survey createSurvey(Survey urvey) {
+	public Survey createSurvey(Survey survey) {
 		// TODO Auto-generated method stub
-		return null;
+		return surveyRepo.createSurvey(survey);
 	}
 
 	@Override
 	public Survey updateSurvey(Survey survey) {
 		// TODO Auto-generated method stub
-		return null;
+		return surveyRepo.updateSurvey(survey);
 	}
 
-	@Override
-	public Survey deleteSurvey(int id) {
+ 	@Override
+	public int deleteSurvey(Survey survey) {
 		// TODO Auto-generated method stub
-		return null;
+		return surveyRepo.deleteSurvey(survey);
 	}
+
 
 }

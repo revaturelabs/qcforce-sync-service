@@ -1,6 +1,7 @@
 package com.revature.service;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -62,12 +63,31 @@ public class SurveyServiceTest {
 	}
 	
 	/**
-	 * Happy path, creates service
+	 * Happy path, creates survey
 	 * @author Hannah, Alma, Brett, and Yara
 	 */
 	
 	@Test
 	void surveyServiceTest_WithoutError() {
+		
+		when(surveyRepo.createSurvey(survey)).thenReturn(survey);
+		
+		Survey returned = surveyService.createSurvey(survey);
+		
+		verify(surveyRepo).createSurvey(survey);
+		
+		assertEquals(survey, returned, "Object returned does not match expected.");
+		
+	}
+	
+	/*
+	 * Happy path for getting a survey
+	 * Can't retrieve survey because it doesn't exist
+	 * @author Hannah, Alma, Brett, and Yara
+	 */
+	
+	@Test
+	void surveyServiceTest_RetrievedWithoutError(){
 		
 		when(surveyRepo.getSurvey(survey.getId())).thenReturn(survey);
 		
@@ -75,10 +95,72 @@ public class SurveyServiceTest {
 		
 		verify(surveyRepo).getSurvey(survey.getId());
 		
-		assertEquals(surveyQuestion, returned, "Object returned does not match expected.");
+		assertEquals(survey, returned, "Object returned does not match expected.");
+	}
+	
+	/*
+	 * Edge case #1
+	 * Can't retrieve survey because it doesn't exist
+	 * @author Hannah, Alma, Brett, and Yara
+	 */
+	
+	@Test
+	void surveyServiceTest_SurveyDoesntExist() throws NullPointerException {
+		
+		when(surveyRepo.getSurvey(survey.getId())).thenReturn(null);
+		
+		assertThrows(NullPointerException.class, () -> surveyService.getSurvey(survey.getId()));
+	}
+	
+	
+	/**
+	 * Edge case #2
+	 * Cannot create survey because it is null
+	 * @author Hannah, Alma, Brett, and Yara
+	 */
+	@Test
+	void surveyServiceTest_CannotCreateSurvey() {
+		
+		survey = null;
+		
+		when(surveyRepo.createSurvey(survey)).thenReturn(null);
+		
+		assertThrows(NullPointerException.class, () -> surveyService.createSurvey(survey));
 		
 	}
 	
+	
+	/**
+	 * Happy path; successfully deleting a survey
+	 * @author Hannah, Alma, Brett, and Yara
+	 */
+	
+	@Test
+	void surveyServiceTest_DeleteSurveyWithoutErrors() {
+		
+		when(surveyRepo.deleteSurvey(survey)).thenReturn(1);
+		
+		verify(surveyRepo).deleteSurvey(survey);
+		
+		assertEquals(surveyService.deleteSurvey(survey), 1);
+		
+	}
+	
+	/**
+	 * Edge case #3
+	 * Cannot delete survey because it doesn't exist
+	 * @author Hannah, Alma, Brett, and Yara
+	 */
+	
+	@Test
+	void surveyServiceTest_CannotDeleteSurvey() {
+		
+
+		when(surveyRepo.deleteSurvey(survey)).thenReturn(0);
+		
+		assertEquals(surveyService.deleteSurvey(survey), 0);
+		
+	}
 	
 	
 	@AfterEach

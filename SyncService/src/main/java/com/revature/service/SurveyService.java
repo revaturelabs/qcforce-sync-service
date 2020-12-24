@@ -25,6 +25,6 @@ public interface SurveyService {
 	
 	public Survey updateSurvey(Survey survey);
 	
-	public Survey deleteSurvey(int id);
+	public int deleteSurvey(Survey survey);
 
 }
