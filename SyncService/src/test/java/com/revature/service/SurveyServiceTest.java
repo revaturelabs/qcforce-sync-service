@@ -1,6 +1,6 @@
 package com.revature.service;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
@@ -8,9 +8,7 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -18,6 +16,8 @@ import org.mockito.Mock;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.event.annotation.AfterTestClass;
+import org.springframework.test.context.event.annotation.BeforeTestClass;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.revature.models.QuestionType;
@@ -25,25 +25,33 @@ import com.revature.models.Survey;
 import com.revature.models.SurveyQuestion;
 import com.revature.repo.SurveyRepo;
 
+
 @SpringBootTest()
 @AutoConfigureMockMvc
 @RunWith(SpringRunner.class)
-class SurveyServiceTest {
-
+public class SurveyServiceTest {
+	
 	@Mock
-
+	
 	SurveyRepo surveyRepo;
 	@MockBean
-	
-	private static SurveyQuestion surveyQuestion;
-	
+	private SurveyQuestion surveyQuestion;
 	private Survey survey;
-
+	
 	@InjectMocks
 	SurveyServiceImpl surveyService;
-
-	@BeforeAll
-	static void setUpBeforeClass() throws Exception {
+	
+	@BeforeTestClass
+	public static void setUpBeforeClass() throws Exception {
+		
+	}
+	@AfterTestClass
+	public static void tearDownAfterClass() throws Exception {
+		
+	}
+	
+	@BeforeEach
+	public void setUp() throws Exception {
 		
 		List<String> questions = new ArrayList<String>();
 		questions.add("How are you?");
@@ -52,19 +60,12 @@ class SurveyServiceTest {
 		Survey survey = new Survey(1, 8, "Kubernetes", 30, LocalDateTime.now(), surveyQuestionList);
 		
 	}
-
-	@AfterAll
-	static void tearDownAfterClass() throws Exception {
-	}
-
-	@BeforeEach
-	void setUp() throws Exception {
-	}
-
-	@AfterEach
-	void tearDown() throws Exception {
-	}
-
+	
+	/**
+	 * Happy path, creates service
+	 * @author Hannah, Alma, Brett, and Yara
+	 */
+	
 	@Test
 	void surveyServiceTest_WithoutError() {
 		
@@ -77,6 +78,11 @@ class SurveyServiceTest {
 		assertEquals(surveyQuestion, returned, "Object returned does not match expected.");
 		
 	}
-
-
+	
+	
+	
+	@AfterEach
+	public void tearDown() throws Exception {
+	}
+	
 }
